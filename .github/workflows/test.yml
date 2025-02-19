@@ -19,7 +19,7 @@ jobs:
           - 27017:27017
 
     steps:
-      - name: Repository install
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Install Node.js
@@ -28,7 +28,11 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd backend
+          npm install
 
       - name: Run tests
-        run: npm test
+        run: |
+          cd backend
+          npm test
