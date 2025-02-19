@@ -1,8 +1,10 @@
 const express = require("express");
-const connectDB = require("./config/db");
+const connectDB = require("./config/database");
+const stoneRoutes = require("./routes/stones");
 
 const app = express();
 app.use(express.json());
+app.use("/api/stones", stoneRoutes);
 
 connectDB();
 
