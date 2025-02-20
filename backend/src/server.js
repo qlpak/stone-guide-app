@@ -1,12 +1,14 @@
 const express = require("express");
 const connectDB = require("./config/database");
 const stoneRoutes = require("./routes/stones");
+const pricingRoutes = require("./routes/pricing");
 const dotenv = require("dotenv");
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use("/api/stones", stoneRoutes);
+app.use("/api/pricing", pricingRoutes);
 
 connectDB();
 
