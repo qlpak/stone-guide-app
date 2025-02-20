@@ -2,14 +2,16 @@ const axios = require("axios");
 const Stone = require("../models/Stone");
 
 const convertToM2 = (length, width, unit) => {
-  switch (unit) {
-    case "cm":
-      return (length / 100) * (width / 100);
-    case "m":
-      return length * width;
-    default:
-      throw new Error("Invalid unit provided.");
+  if (unit === "cm") {
+    return (length / 100) * (width / 100);
+  } else if (unit === "cm2") {
+    return length / 10000;
+  } else if (unit === "m") {
+    return length * width;
+  } else if (unit === "m2") {
+    return length;
   }
+  return null;
 };
 
 const getExchangeRate = async () => {
@@ -20,18 +22,25 @@ const getExchangeRate = async () => {
     return response.data.eur.pln;
   } catch (error) {
     console.error("Error fetching exchange rate:", error);
-    return null;
+    return 4.5;
   }
 };
 
 const calculatePrice = async (req, res) => {
   try {
-    const { stoneId, length, width, unit } = req.body;
-
-    if (!stoneId || !length || !width || !unit) {
+    const { stoneId, length, width, unit, thickness, additionalCosts } =
+      req.body;
+    if (!stoneId || !length || !width || !unit || !thickness) {
       return res.status(400).json({
-        error: "All fields are required: stoneId, length, width, unit.",
+        error:
+          "All fields are required: stoneId, length, width, unit, thickness.",
       });
+    }
+
+    if (!["2cm", "3cm"].includes(thickness)) {
+      return res
+        .status(400)
+        .json({ error: "Thickness must be either '2cm' or '3cm'." });
     }
 
     const stone = await Stone.findById(stoneId);
@@ -40,24 +49,30 @@ const calculatePrice = async (req, res) => {
     }
 
     const areaM2 = convertToM2(length, width, unit);
-    const priceEUR = areaM2 * stone.pricePerM2;
-    const exchangeRate = await getExchangeRate();
-
-    if (!exchangeRate) {
-      return res.status(500).json({ error: "Failed to fetch exchange rate." });
+    if (!areaM2) {
+      return res.status(400).json({ error: "Invalid unit provided." });
     }
+    const pricePerM2 =
+      thickness === "2cm" ? stone.pricePerM2_2cm : stone.pricePerM2_3cm;
 
-    const pricePLN = priceEUR * exchangeRate;
+    const { eurRate, usdRate } = await getExchangeRate();
+
+    const extraCost =
+      additionalCosts && !isNaN(additionalCosts) ? Number(additionalCosts) : 0;
+
+    let totalPriceEUR = Number((areaM2 * pricePerM2 + extraCost).toFixed(2));
+    let totalPricePLN = Number((totalPriceEUR * eurRate).toFixed(2));
+    let totalPriceUSD = Number((totalPriceEUR * usdRate).toFixed(2));
 
     res.json({
-      stone: stone.name,
       areaM2,
-      priceEUR: priceEUR.toFixed(2),
-      pricePLN: pricePLN.toFixed(2),
+      priceEUR: totalPriceEUR,
+      pricePLN: totalPricePLN,
+      priceUSD: totalPriceUSD,
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error." });
+    console.error("Error in price calculation:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 

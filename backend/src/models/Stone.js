@@ -9,7 +9,18 @@ const StoneSchema = new mongoose.Schema(
       required: true,
     },
     color: { type: String, required: true },
-    pricePerM2: { type: Number, required: true },
+    pricePerM2_2cm: {
+      type: Number,
+      required: function () {
+        return !this.pricePerM2_3cm;
+      },
+    },
+    pricePerM2_3cm: {
+      type: Number,
+      required: function () {
+        return !this.pricePerM2_2cm;
+      },
+    },
     usage: [
       {
         type: String,
