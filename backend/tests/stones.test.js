@@ -11,7 +11,7 @@ describe("Stone API", () => {
       name: "Taj Mahal",
       type: "granite",
       color: "Beige",
-      pricePerM2: 274.86,
+      pricePerM2_2cm: 274.86,
       usage: ["kitchen"],
       location: "Showroom Table A",
     });
@@ -37,7 +37,7 @@ describe("Stone API", () => {
         name: "Carrara",
         type: "marble",
         color: "White",
-        pricePerM2: 200,
+        pricePerM2_2cm: 200,
         usage: ["bathroom"],
         location: "Showroom Table B",
       });

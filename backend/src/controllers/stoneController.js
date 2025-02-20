@@ -21,19 +21,40 @@ const getStoneById = async (req, res) => {
 
 const createStone = async (req, res) => {
   try {
-    const { name, type, color, pricePerM2, usage, location } = req.body;
-    const newStone = new Stone({
+    const {
       name,
       type,
       color,
-      pricePerM2,
+      pricePerM2_2cm,
+      pricePerM2_3cm,
+      usage,
+      location,
+    } = req.body;
+
+    if (!name || !type || !color || !usage || !location) {
+      return res.status(400).json({ error: "Missing required fields." });
+    }
+
+    if (!pricePerM2_2cm && !pricePerM2_3cm) {
+      return res
+        .status(400)
+        .json({ error: "At least one price (2cm or 3cm) is required." });
+    }
+
+    const stone = await Stone.create({
+      name,
+      type,
+      color,
+      pricePerM2_2cm,
+      pricePerM2_3cm,
       usage,
       location,
     });
-    await newStone.save();
-    res.status(201).json(newStone);
+
+    res.status(201).json(stone);
   } catch (error) {
-    res.status(400).json({ message: "Error creating stone.;(" });
+    console.error("Error creating stone:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
