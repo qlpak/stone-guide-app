@@ -3,10 +3,16 @@ const connectDB = require("./config/database");
 const stoneRoutes = require("./routes/stones");
 const pricingRoutes = require("./routes/pricing");
 const dotenv = require("dotenv");
+const helmet = require("helmet");
+const morgan = require("morgan");
 dotenv.config();
 
 const app = express();
+
 app.use(express.json());
+app.use(helmet());
+app.use(morgan("dev"));
+
 app.use("/api/stones", stoneRoutes);
 app.use("/api/pricing", pricingRoutes);
 
