@@ -2,10 +2,41 @@ const Stone = require("../models/Stone");
 
 const getStones = async (req, res) => {
   try {
-    const stones = await Stone.find();
-    res.status(200).json(stones);
+    const {
+      type,
+      color,
+      priceMin,
+      priceMax,
+      usage,
+      page = 1,
+      limit = 10,
+    } = req.query;
+
+    const filter = {};
+
+    if (type) filter.type = type;
+    if (color) filter.color = color;
+    if (priceMin || priceMax) {
+      filter.pricePerM2_2cm = {};
+      if (priceMin) filter.pricePerM2_2cm.$gte = parseFloat(priceMin);
+      if (priceMax) filter.pricePerM2_2cm.$lte = parseFloat(priceMax);
+    }
+    if (usage) filter.usage = { $in: usage.split(",") };
+
+    const stones = await Stone.find(filter)
+      .skip((page - 1) * limit)
+      .limit(parseInt(limit));
+
+    const total = await Stone.countDocuments(filter);
+
+    res.json({
+      stones,
+      total,
+      page: parseInt(page),
+      totalPages: Math.ceil(total / limit),
+    });
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
