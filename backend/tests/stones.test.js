@@ -30,6 +30,17 @@ describe("Stone API", () => {
     expect(res.body.name).toBe("Taj Mahal");
   });
 
+  test("should get a list of stones with pagination and filters", async () => {
+    const res = await request(app).get(
+      "/api/stones?type=granite&priceMin=100&priceMax=300&page=1&limit=5"
+    );
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.stones).toBeInstanceOf(Array);
+    expect(res.body.page).toBe(1);
+    expect(res.body.totalPages).toBeGreaterThan(0);
+  });
+
   test("should create a new stone", async () => {
     const res = await request(app)
       .post("/api/stones")
