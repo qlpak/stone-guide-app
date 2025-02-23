@@ -2,11 +2,15 @@ const request = require("supertest");
 const app = require("../src/server");
 const Stone = require("../src/models/Stone");
 const mongoose = require("mongoose");
+const redis = require("../src/config/redis");
+const logger = require("../src/config/logger");
 
 describe("Pricing API", () => {
   let stoneId;
 
   beforeAll(async () => {
+    await redis.flushall();
+
     const stone = await Stone.create({
       name: "Test Stone",
       type: "granite",
@@ -20,6 +24,7 @@ describe("Pricing API", () => {
   });
 
   afterAll(async () => {
+    await redis.quit();
     await mongoose.connection.dropDatabase();
     await mongoose.connection.close();
   });
@@ -33,7 +38,7 @@ describe("Pricing API", () => {
       thickness: "2cm",
     });
 
-    console.log("Response body:", res.body);
+    logger.info("Response body:", res.body);
 
     expect(res.statusCode).toBe(200);
     expect(res.body).toHaveProperty("priceEUR");
