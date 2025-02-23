@@ -117,5 +117,30 @@ const searchStones = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+const getRecommendedStones = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const stone = await Stone.findById(id);
 
-module.exports = { getStones, getStoneById, createStone, searchStones };
+    if (!stone) {
+      return res.status(404).json({ error: "Stone not found." });
+    }
+
+    const recommendedStones = await Stone.find({
+      type: stone.type,
+      color: stone.color,
+      _id: { $ne: stone._id },
+    }).limit(5);
+    res.json(recommendedStones);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+module.exports = {
+  getStones,
+  getStoneById,
+  createStone,
+  searchStones,
+  getRecommendedStones,
+};
