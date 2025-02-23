@@ -89,4 +89,33 @@ const createStone = async (req, res) => {
   }
 };
 
-module.exports = { getStones, getStoneById, createStone };
+const searchStones = async (req, res) => {
+  try {
+    const { query, usage } = req.query;
+
+    if (!query && !usage) {
+      return res.status(400).json({ error: "Missing search parameters" });
+    }
+
+    const filter = {};
+    if (query) {
+      filter.name = { $regex: query, $options: "i" };
+    }
+
+    if (usage && typeof usage === "string") {
+      filter.usage = { $in: usage.split(",") };
+    }
+
+    const stones = await Stone.find(filter);
+
+    if (!stones.length) {
+      return res.status(404).json({ error: "No stones found" });
+    }
+
+    res.json({ stones });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = { getStones, getStoneById, createStone, searchStones };

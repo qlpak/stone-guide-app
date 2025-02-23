@@ -8,6 +8,8 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    networks:
+      - stone-network
 
   backend:
     build: .
@@ -22,6 +24,12 @@ services:
     volumes:
       - ./src:/backend/src
       - /backend/node_modules
+    networks:
+      - stone-network
 
 volumes:
   mongo-data:
+
+networks:
+  stone-network:
+    driver: bridge

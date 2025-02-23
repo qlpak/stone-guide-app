@@ -9,7 +9,7 @@ describe("Stone API", () => {
   beforeAll(async () => {
     const stone = await Stone.create({
       name: "Taj Mahal",
-      type: "granite",
+      type: "quartzite",
       color: "Beige",
       pricePerM2_2cm: 274.86,
       usage: ["kitchen"],
@@ -32,7 +32,7 @@ describe("Stone API", () => {
 
   test("should get a list of stones with pagination and filters", async () => {
     const res = await request(app).get(
-      "/api/stones?type=granite&priceMin=100&priceMax=300&page=1&limit=5"
+      "/api/stones?type=quartzite&priceMin=100&priceMax=300&page=1&limit=5"
     );
 
     expect(res.statusCode).toBe(200);
@@ -55,5 +55,14 @@ describe("Stone API", () => {
 
     expect(res.statusCode).toBe(201);
     expect(res.body.name).toBe("Carrara");
+  });
+
+  test("should search stones by name", async () => {
+    const res = await request(app).get("/api/stones/search?query=Taj Mahal");
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.stones).toBeInstanceOf(Array);
+    expect(res.body.stones.length).toBeGreaterThan(0);
+    expect(res.body.stones[0].name).toMatch(/Taj Mahal/i);
   });
 });
