@@ -1,4 +1,5 @@
 const Stone = require("../models/Stone");
+const logger = require("../config/logger");
 
 const getStones = async (req, res) => {
   try {
@@ -29,6 +30,8 @@ const getStones = async (req, res) => {
 
     const total = await Stone.countDocuments(filter);
 
+    logger.info("Fetched stones list", { query: req.query });
+
     res.json({
       stones,
       total,
@@ -36,6 +39,7 @@ const getStones = async (req, res) => {
       totalPages: Math.ceil(total / limit),
     });
   } catch (error) {
+    logger.error("Error fetching stones", { error });
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -43,9 +47,13 @@ const getStones = async (req, res) => {
 const getStoneById = async (req, res) => {
   try {
     const stone = await Stone.findById(req.params.id);
-    if (!stone) return res.status(404).json({ message: "Stone not found" });
+    if (!stone) {
+      logger.warn("Stone not found", { id: req.params.id });
+      return res.status(404).json({ message: "Stone not found" });
+    }
     res.status(200).json(stone);
   } catch (error) {
+    logger.error("Error fetching stone by ID", { error });
     res.status(500).json({ message: "Server error" });
   }
 };
@@ -63,10 +71,12 @@ const createStone = async (req, res) => {
     } = req.body;
 
     if (!name || !type || !color || !usage || !location) {
+      logger.warn("Missing required fields", { body: req.body });
       return res.status(400).json({ error: "Missing required fields." });
     }
 
     if (!pricePerM2_2cm && !pricePerM2_3cm) {
+      logger.warn("At least one price is required", { body: req.body });
       return res
         .status(400)
         .json({ error: "At least one price (2cm or 3cm) is required." });
@@ -82,9 +92,10 @@ const createStone = async (req, res) => {
       location,
     });
 
+    logger.info("New stone created", { stone });
     res.status(201).json(stone);
   } catch (error) {
-    console.error("Error creating stone:", error);
+    logger.error("Error creating stone", { error });
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
@@ -94,6 +105,7 @@ const searchStones = async (req, res) => {
     const { query, usage } = req.query;
 
     if (!query && !usage) {
+      logger.warn("Missing search parameters", { query: req.query });
       return res.status(400).json({ error: "Missing search parameters" });
     }
 
@@ -109,20 +121,28 @@ const searchStones = async (req, res) => {
     const stones = await Stone.find(filter);
 
     if (!stones.length) {
+      logger.warn("No stones found for search query", { query: req.query });
       return res.status(404).json({ error: "No stones found" });
     }
 
+    logger.info("Stone search successful", {
+      query: req.query,
+      results: stones.length,
+    });
     res.json({ stones });
   } catch (error) {
+    logger.error("Error searching stones", { error });
     res.status(500).json({ error: error.message });
   }
 };
+
 const getRecommendedStones = async (req, res) => {
   try {
     const { id } = req.params;
     const stone = await Stone.findById(id);
 
     if (!stone) {
+      logger.warn("Stone not found for recommendations", { id });
       return res.status(404).json({ error: "Stone not found." });
     }
 
@@ -131,8 +151,14 @@ const getRecommendedStones = async (req, res) => {
       color: stone.color,
       _id: { $ne: stone._id },
     }).limit(5);
+
+    logger.info("Recommended stones retrieved", {
+      id,
+      recommendations: recommendedStones.length,
+    });
     res.json(recommendedStones);
   } catch (error) {
+    logger.error("Error fetching recommended stones", { error });
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

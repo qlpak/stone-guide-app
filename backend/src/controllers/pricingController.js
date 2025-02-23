@@ -1,5 +1,6 @@
 const axios = require("axios");
 const Stone = require("../models/Stone");
+const logger = require("../config/logger");
 
 const convertToM2 = (length, width, unit) => {
   if (unit === "cm") {
@@ -19,10 +20,13 @@ const getExchangeRate = async () => {
     const response = await axios.get(
       "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/eur.json"
     );
-    return response.data.eur.pln;
+    return {
+      eurRate: response.data.eur.pln,
+      usdRate: response.data.eur.usd,
+    };
   } catch (error) {
-    console.error("Error fetching exchange rate:", error);
-    return 4.5;
+    logger.error("Error fetching exchange rate:", error);
+    return { eurRate: 4.5, usdRate: 1.1 };
   }
 };
 
@@ -31,6 +35,7 @@ const calculatePrice = async (req, res) => {
     const { stoneId, length, width, unit, thickness, additionalCosts } =
       req.body;
     if (!stoneId || !length || !width || !unit || !thickness) {
+      logger.warn("Missing required fields in price calculation request.");
       return res.status(400).json({
         error:
           "All fields are required: stoneId, length, width, unit, thickness.",
@@ -38,6 +43,7 @@ const calculatePrice = async (req, res) => {
     }
 
     if (!["2cm", "3cm"].includes(thickness)) {
+      logger.warn("Invalid thickness value received: " + thickness);
       return res
         .status(400)
         .json({ error: "Thickness must be either '2cm' or '3cm'." });
@@ -45,11 +51,13 @@ const calculatePrice = async (req, res) => {
 
     const stone = await Stone.findById(stoneId);
     if (!stone) {
+      logger.warn("Stone not found with ID: " + stoneId);
       return res.status(404).json({ error: "Stone not found." });
     }
 
     const areaM2 = convertToM2(length, width, unit);
     if (!areaM2) {
+      logger.warn("Invalid unit provided: " + unit);
       return res.status(400).json({ error: "Invalid unit provided." });
     }
     const pricePerM2 =
@@ -64,6 +72,8 @@ const calculatePrice = async (req, res) => {
     let totalPricePLN = Number((totalPriceEUR * eurRate).toFixed(2));
     let totalPriceUSD = Number((totalPriceEUR * usdRate).toFixed(2));
 
+    logger.info("Price calculation successful for stone ID: " + stoneId);
+
     res.json({
       areaM2,
       priceEUR: totalPriceEUR,
@@ -71,7 +81,7 @@ const calculatePrice = async (req, res) => {
       priceUSD: totalPriceUSD,
     });
   } catch (error) {
-    console.error("Error in price calculation:", error);
+    logger.error("Error in price calculation:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
