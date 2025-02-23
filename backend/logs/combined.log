@@ -46,3 +46,141 @@
 {"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T16:21:26.461Z"}
 {"level":"warn","message":"Missing required fields in price calculation request.","timestamp":"2025-02-23T16:21:26.464Z"}
 {"level":"info","message":"GET /","timestamp":"2025-02-23T16:21:26.948Z"}
+{"level":"info","message":"GET /api/stones/67bb50e864ce5d6e44cfffbf","timestamp":"2025-02-23T16:46:32.088Z"}
+{"level":"info","message":"GET /api/stones?type=quartzite&priceMin=100&priceMax=300&page=1&limit=5","timestamp":"2025-02-23T16:46:32.110Z"}
+{"level":"info","message":"Fetched stones list","query":{"limit":"5","page":"1","priceMax":"300","priceMin":"100","type":"quartzite"},"timestamp":"2025-02-23T16:46:32.129Z"}
+{"level":"info","message":"POST /api/stones","timestamp":"2025-02-23T16:46:32.139Z"}
+{"level":"info","message":"New stone created","stone":{"__v":0,"_id":"67bb50e864ce5d6e44cfffc4","color":"White","createdAt":"2025-02-23T16:46:32.144Z","location":"Showroom Table B","name":"Carrara","pricePerM2_2cm":200,"type":"marble","updatedAt":"2025-02-23T16:46:32.144Z","usage":["bathroom"]},"timestamp":"2025-02-23T16:46:32.146Z"}
+{"level":"info","message":"GET /api/stones/search?query=Taj%20Mahal","timestamp":"2025-02-23T16:46:32.150Z"}
+{"level":"info","message":"Stone search successful","query":{"query":"Taj Mahal"},"results":1,"timestamp":"2025-02-23T16:46:32.155Z"}
+{"level":"info","message":"GET /api/stones/recommendations/67bb50e864ce5d6e44cfffc7","timestamp":"2025-02-23T16:46:32.169Z"}
+{"id":"67bb50e864ce5d6e44cfffc7","level":"info","message":"Recommended stones retrieved","recommendations":1,"timestamp":"2025-02-23T16:46:32.176Z"}
+{"level":"info","message":"GET /","timestamp":"2025-02-23T16:46:32.764Z"}
+{"level":"info","message":"GET /api/stones/67bb5105b2f0ea85e0c7f435","timestamp":"2025-02-23T16:47:01.471Z"}
+{"level":"info","message":"GET /api/stones?type=quartzite&priceMin=100&priceMax=300&page=1&limit=5","timestamp":"2025-02-23T16:47:01.515Z"}
+{"level":"info","message":"Fetched stones list","query":{"limit":"5","page":"1","priceMax":"300","priceMin":"100","type":"quartzite"},"timestamp":"2025-02-23T16:47:01.620Z"}
+{"level":"info","message":"POST /api/stones","timestamp":"2025-02-23T16:47:01.648Z"}
+{"level":"info","message":"New stone created","stone":{"__v":0,"_id":"67bb5105b2f0ea85e0c7f43a","color":"White","createdAt":"2025-02-23T16:47:01.654Z","location":"Showroom Table B","name":"Carrara","pricePerM2_2cm":200,"type":"marble","updatedAt":"2025-02-23T16:47:01.654Z","usage":["bathroom"]},"timestamp":"2025-02-23T16:47:01.658Z"}
+{"level":"info","message":"GET /api/stones/search?query=Taj%20Mahal","timestamp":"2025-02-23T16:47:01.709Z"}
+{"level":"info","message":"Stone search successful","query":{"query":"Taj Mahal"},"results":1,"timestamp":"2025-02-23T16:47:01.720Z"}
+{"level":"info","message":"GET /api/stones/recommendations/67bb5105b2f0ea85e0c7f43d","timestamp":"2025-02-23T16:47:01.747Z"}
+{"id":"67bb5105b2f0ea85e0c7f43d","level":"info","message":"Recommended stones retrieved","recommendations":1,"timestamp":"2025-02-23T16:47:01.755Z"}
+{"level":"info","message":"GET /","timestamp":"2025-02-23T16:47:02.273Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T16:47:02.897Z"}
+{"level":"info","message":"Price calculation successful for stone ID: 67bb5106b3ab217e51ef563c","timestamp":"2025-02-23T16:47:03.128Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T16:47:03.140Z"}
+{"level":"info","message":"Price calculation successful for stone ID: 67bb5106b3ab217e51ef563c","timestamp":"2025-02-23T16:47:03.148Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T16:47:03.154Z"}
+{"level":"warn","message":"Missing required fields in price calculation request.","timestamp":"2025-02-23T16:47:03.157Z"}
+{"level":"info","message":"GET /api/stones/67bb516cd61465b8e7744ab9","timestamp":"2025-02-23T16:48:44.440Z"}
+{"level":"info","message":"GET /api/stones?type=quartzite&priceMin=100&priceMax=300&page=1&limit=5","timestamp":"2025-02-23T16:48:44.464Z"}
+{"level":"info","message":"Fetched stones list","query":{"limit":"5","page":"1","priceMax":"300","priceMin":"100","type":"quartzite"},"timestamp":"2025-02-23T16:48:44.480Z"}
+{"level":"info","message":"POST /api/stones","timestamp":"2025-02-23T16:48:44.492Z"}
+{"level":"info","message":"New stone created","stone":{"__v":0,"_id":"67bb516cd61465b8e7744abe","color":"White","createdAt":"2025-02-23T16:48:44.496Z","location":"Showroom Table B","name":"Carrara","pricePerM2_2cm":200,"type":"marble","updatedAt":"2025-02-23T16:48:44.496Z","usage":["bathroom"]},"timestamp":"2025-02-23T16:48:44.498Z"}
+{"level":"info","message":"GET /api/stones/search?query=Taj%20Mahal","timestamp":"2025-02-23T16:48:44.503Z"}
+{"level":"info","message":"Stone search successful","query":{"query":"Taj Mahal"},"results":1,"timestamp":"2025-02-23T16:48:44.507Z"}
+{"level":"info","message":"GET /api/stones/recommendations/67bb516cd61465b8e7744ac1","timestamp":"2025-02-23T16:48:44.520Z"}
+{"id":"67bb516cd61465b8e7744ac1","level":"info","message":"Recommended stones retrieved","recommendations":1,"timestamp":"2025-02-23T16:48:44.528Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T16:48:45.053Z"}
+{"level":"info","message":"Price calculation successful for stone ID: 67bb516d50a767437a4e487f","timestamp":"2025-02-23T16:48:45.266Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T16:48:45.277Z"}
+{"level":"info","message":"Price calculation successful for stone ID: 67bb516d50a767437a4e487f","timestamp":"2025-02-23T16:48:45.285Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T16:48:45.291Z"}
+{"level":"warn","message":"Missing required fields in price calculation request.","timestamp":"2025-02-23T16:48:45.294Z"}
+{"level":"info","message":"GET /","timestamp":"2025-02-23T16:48:45.796Z"}
+{"level":"info","message":"GET /api/stones/67bb5187233feb544f670382","timestamp":"2025-02-23T16:49:11.682Z"}
+{"level":"info","message":"GET /api/stones?type=quartzite&priceMin=100&priceMax=300&page=1&limit=5","timestamp":"2025-02-23T16:49:11.705Z"}
+{"level":"info","message":"Fetched stones list","query":{"limit":"5","page":"1","priceMax":"300","priceMin":"100","type":"quartzite"},"timestamp":"2025-02-23T16:49:11.722Z"}
+{"level":"info","message":"POST /api/stones","timestamp":"2025-02-23T16:49:11.733Z"}
+{"level":"info","message":"New stone created","stone":{"__v":0,"_id":"67bb5187233feb544f670387","color":"White","createdAt":"2025-02-23T16:49:11.738Z","location":"Showroom Table B","name":"Carrara","pricePerM2_2cm":200,"type":"marble","updatedAt":"2025-02-23T16:49:11.738Z","usage":["bathroom"]},"timestamp":"2025-02-23T16:49:11.739Z"}
+{"level":"info","message":"GET /api/stones/search?query=Taj%20Mahal","timestamp":"2025-02-23T16:49:11.744Z"}
+{"level":"info","message":"Stone search successful","query":{"query":"Taj Mahal"},"results":1,"timestamp":"2025-02-23T16:49:11.748Z"}
+{"level":"info","message":"GET /api/stones/recommendations/67bb5187233feb544f67038a","timestamp":"2025-02-23T16:49:11.761Z"}
+{"id":"67bb5187233feb544f67038a","level":"info","message":"Recommended stones retrieved","recommendations":1,"timestamp":"2025-02-23T16:49:11.769Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T16:49:12.340Z"}
+{"level":"info","message":"Price calculation successful for stone ID: 67bb518886beabc3617d2352","timestamp":"2025-02-23T16:49:12.591Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T16:49:12.609Z"}
+{"level":"info","message":"Price calculation successful for stone ID: 67bb518886beabc3617d2352","timestamp":"2025-02-23T16:49:12.616Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T16:49:12.624Z"}
+{"level":"warn","message":"Missing required fields in price calculation request.","timestamp":"2025-02-23T16:49:12.627Z"}
+{"level":"info","message":"GET /","timestamp":"2025-02-23T16:49:13.546Z"}
+{"level":"info","message":"GET /api/stones/67bb51ece180318d9b7e12bc","timestamp":"2025-02-23T16:50:52.453Z"}
+{"level":"info","message":"GET /api/stones?type=quartzite&priceMin=100&priceMax=300&page=1&limit=5","timestamp":"2025-02-23T16:50:52.475Z"}
+{"level":"info","message":"Fetched stones list","query":{"limit":"5","page":"1","priceMax":"300","priceMin":"100","type":"quartzite"},"timestamp":"2025-02-23T16:50:52.491Z"}
+{"level":"info","message":"POST /api/stones","timestamp":"2025-02-23T16:50:52.502Z"}
+{"level":"info","message":"New stone created","stone":{"__v":0,"_id":"67bb51ece180318d9b7e12c1","color":"White","createdAt":"2025-02-23T16:50:52.507Z","location":"Showroom Table B","name":"Carrara","pricePerM2_2cm":200,"type":"marble","updatedAt":"2025-02-23T16:50:52.507Z","usage":["bathroom"]},"timestamp":"2025-02-23T16:50:52.508Z"}
+{"level":"info","message":"GET /api/stones/search?query=Taj%20Mahal","timestamp":"2025-02-23T16:50:52.514Z"}
+{"level":"info","message":"Stone search successful","query":{"query":"Taj Mahal"},"results":1,"timestamp":"2025-02-23T16:50:52.522Z"}
+{"level":"info","message":"GET /api/stones/recommendations/67bb51ece180318d9b7e12c4","timestamp":"2025-02-23T16:50:52.535Z"}
+{"id":"67bb51ece180318d9b7e12c4","level":"info","message":"Recommended stones retrieved","recommendations":1,"timestamp":"2025-02-23T16:50:52.543Z"}
+{"level":"info","message":"GET /","timestamp":"2025-02-23T16:50:53.090Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T16:50:53.683Z"}
+{"level":"info","message":"Price calculation successful for stone ID: 67bb51edd00a0f0202181ad5","timestamp":"2025-02-23T16:50:53.864Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T16:50:53.873Z"}
+{"level":"info","message":"Price calculation successful for stone ID: 67bb51edd00a0f0202181ad5","timestamp":"2025-02-23T16:50:53.882Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T16:50:53.887Z"}
+{"level":"warn","message":"Missing required fields in price calculation request.","timestamp":"2025-02-23T16:50:53.889Z"}
+{"level":"info","message":"GET /api/stones/67bb5224ac7bf9c004faef57","timestamp":"2025-02-23T16:51:48.981Z"}
+{"level":"info","message":"GET /api/stones?type=quartzite&priceMin=100&priceMax=300&page=1&limit=5","timestamp":"2025-02-23T16:51:49.004Z"}
+{"level":"info","message":"Fetched stones list","query":{"limit":"5","page":"1","priceMax":"300","priceMin":"100","type":"quartzite"},"timestamp":"2025-02-23T16:51:49.021Z"}
+{"level":"info","message":"POST /api/stones","timestamp":"2025-02-23T16:51:49.033Z"}
+{"level":"info","message":"New stone created","stone":{"__v":0,"_id":"67bb5225ac7bf9c004faef5c","color":"White","createdAt":"2025-02-23T16:51:49.037Z","location":"Showroom Table B","name":"Carrara","pricePerM2_2cm":200,"type":"marble","updatedAt":"2025-02-23T16:51:49.037Z","usage":["bathroom"]},"timestamp":"2025-02-23T16:51:49.038Z"}
+{"level":"info","message":"GET /api/stones/search?query=Taj%20Mahal","timestamp":"2025-02-23T16:51:49.043Z"}
+{"level":"info","message":"Stone search successful","query":{"query":"Taj Mahal"},"results":1,"timestamp":"2025-02-23T16:51:49.048Z"}
+{"level":"info","message":"GET /api/stones/recommendations/67bb5225ac7bf9c004faef5f","timestamp":"2025-02-23T16:51:49.061Z"}
+{"id":"67bb5225ac7bf9c004faef5f","level":"info","message":"Recommended stones retrieved","recommendations":1,"timestamp":"2025-02-23T16:51:49.068Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T16:51:49.602Z"}
+{"level":"info","message":"Price calculation successful for stone ID: 67bb52250faf51fd5f39a0f6","timestamp":"2025-02-23T16:51:49.733Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T16:51:49.741Z"}
+{"level":"info","message":"Price calculation successful for stone ID: 67bb52250faf51fd5f39a0f6","timestamp":"2025-02-23T16:51:49.748Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T16:51:49.753Z"}
+{"level":"warn","message":"Missing required fields in price calculation request.","timestamp":"2025-02-23T16:51:49.756Z"}
+{"level":"info","message":"GET /","timestamp":"2025-02-23T16:51:50.262Z"}
+{"level":"info","message":"GET /api/stones/67bb53c81fb579dc4cd732cc","timestamp":"2025-02-23T16:58:48.657Z"}
+{"level":"info","message":"GET /api/stones?type=quartzite&priceMin=100&priceMax=300&page=1&limit=5","timestamp":"2025-02-23T16:58:48.677Z"}
+{"level":"info","message":"Fetched stones list","query":{"limit":"5","page":"1","priceMax":"300","priceMin":"100","type":"quartzite"},"timestamp":"2025-02-23T16:58:48.694Z"}
+{"level":"info","message":"POST /api/stones","timestamp":"2025-02-23T16:58:48.704Z"}
+{"level":"info","message":"New stone created","stone":{"__v":0,"_id":"67bb53c81fb579dc4cd732d1","color":"White","createdAt":"2025-02-23T16:58:48.709Z","location":"Showroom Table B","name":"Carrara","pricePerM2_2cm":200,"type":"marble","updatedAt":"2025-02-23T16:58:48.709Z","usage":["bathroom"]},"timestamp":"2025-02-23T16:58:48.710Z"}
+{"level":"info","message":"GET /api/stones/search?query=Taj%20Mahal","timestamp":"2025-02-23T16:58:48.714Z"}
+{"level":"info","message":"Stone search successful","query":{"query":"Taj Mahal"},"results":1,"timestamp":"2025-02-23T16:58:48.720Z"}
+{"level":"info","message":"GET /api/stones/recommendations/67bb53c81fb579dc4cd732d4","timestamp":"2025-02-23T16:58:48.732Z"}
+{"id":"67bb53c81fb579dc4cd732d4","level":"info","message":"Recommended stones retrieved","recommendations":1,"timestamp":"2025-02-23T16:58:48.740Z"}
+{"level":"info","message":"GET /","timestamp":"2025-02-23T16:58:49.325Z"}
+{"level":"info","message":"GET /api/stones/67bb53f8e5df3fb394e1d898","timestamp":"2025-02-23T16:59:36.229Z"}
+{"level":"info","message":"GET /api/stones?type=quartzite&priceMin=100&priceMax=300&page=1&limit=5","timestamp":"2025-02-23T16:59:36.250Z"}
+{"level":"info","message":"Fetched stones list","query":{"limit":"5","page":"1","priceMax":"300","priceMin":"100","type":"quartzite"},"timestamp":"2025-02-23T16:59:36.269Z"}
+{"level":"info","message":"POST /api/stones","timestamp":"2025-02-23T16:59:36.281Z"}
+{"level":"info","message":"New stone created","stone":{"__v":0,"_id":"67bb53f8e5df3fb394e1d89d","color":"White","createdAt":"2025-02-23T16:59:36.285Z","location":"Showroom Table B","name":"Carrara","pricePerM2_2cm":200,"type":"marble","updatedAt":"2025-02-23T16:59:36.285Z","usage":["bathroom"]},"timestamp":"2025-02-23T16:59:36.287Z"}
+{"level":"info","message":"GET /api/stones/search?query=Taj%20Mahal","timestamp":"2025-02-23T16:59:36.292Z"}
+{"level":"info","message":"Stone search successful","query":{"query":"Taj Mahal"},"results":1,"timestamp":"2025-02-23T16:59:36.296Z"}
+{"level":"info","message":"GET /api/stones/recommendations/67bb53f8e5df3fb394e1d8a0","timestamp":"2025-02-23T16:59:36.309Z"}
+{"id":"67bb53f8e5df3fb394e1d8a0","level":"info","message":"Recommended stones retrieved","recommendations":1,"timestamp":"2025-02-23T16:59:36.317Z"}
+{"level":"info","message":"GET /","timestamp":"2025-02-23T16:59:36.807Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T16:59:37.432Z"}
+{"level":"info","message":"Exchange rates retrieved from API","timestamp":"2025-02-23T16:59:37.625Z"}
+{"level":"info","message":"Price calculation successful for stone ID: 67bb53f9ab57596bf986feca","timestamp":"2025-02-23T16:59:37.627Z"}
+{"areaM2":1.08,"level":"info","message":"Response body:","priceEUR":108,"pricePLN":449.21,"priceUSD":112.99,"timestamp":"2025-02-23T16:59:37.632Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T16:59:37.641Z"}
+{"level":"info","message":"Exchange rates retrieved from cache","timestamp":"2025-02-23T16:59:37.648Z"}
+{"level":"info","message":"Price calculation successful for stone ID: 67bb53f9ab57596bf986feca","timestamp":"2025-02-23T16:59:37.649Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T16:59:37.656Z"}
+{"level":"warn","message":"Missing required fields in price calculation request.","timestamp":"2025-02-23T16:59:37.659Z"}
+{"level":"info","message":"GET /api/stones/67bb616e6a3c2139e31bde00","timestamp":"2025-02-23T17:57:03.040Z"}
+{"level":"info","message":"GET /api/stones?type=quartzite&priceMin=100&priceMax=300&page=1&limit=5","timestamp":"2025-02-23T17:57:03.061Z"}
+{"level":"info","message":"Fetched stones list","query":{"limit":"5","page":"1","priceMax":"300","priceMin":"100","type":"quartzite"},"timestamp":"2025-02-23T17:57:03.078Z"}
+{"level":"info","message":"POST /api/stones","timestamp":"2025-02-23T17:57:03.089Z"}
+{"level":"info","message":"New stone created","stone":{"__v":0,"_id":"67bb616f6a3c2139e31bde05","color":"White","createdAt":"2025-02-23T17:57:03.093Z","location":"Showroom Table B","name":"Carrara","pricePerM2_2cm":200,"type":"marble","updatedAt":"2025-02-23T17:57:03.093Z","usage":["bathroom"]},"timestamp":"2025-02-23T17:57:03.095Z"}
+{"level":"info","message":"GET /api/stones/search?query=Taj%20Mahal","timestamp":"2025-02-23T17:57:03.099Z"}
+{"level":"info","message":"Stone search successful","query":{"query":"Taj Mahal"},"results":1,"timestamp":"2025-02-23T17:57:03.104Z"}
+{"level":"info","message":"GET /api/stones/recommendations/67bb616f6a3c2139e31bde08","timestamp":"2025-02-23T17:57:03.117Z"}
+{"id":"67bb616f6a3c2139e31bde08","level":"info","message":"Recommended stones retrieved","recommendations":1,"timestamp":"2025-02-23T17:57:03.124Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T17:57:03.697Z"}
+{"level":"info","message":"Exchange rates retrieved from API","timestamp":"2025-02-23T17:57:03.888Z"}
+{"level":"info","message":"Price calculation successful for stone ID: 67bb616f15c6c68c1a912053","timestamp":"2025-02-23T17:57:03.890Z"}
+{"areaM2":1.08,"level":"info","message":"Response body:","priceEUR":108,"pricePLN":449.21,"priceUSD":112.99,"timestamp":"2025-02-23T17:57:03.894Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T17:57:03.899Z"}
+{"level":"info","message":"Exchange rates retrieved from cache","timestamp":"2025-02-23T17:57:03.909Z"}
+{"level":"info","message":"Price calculation successful for stone ID: 67bb616f15c6c68c1a912053","timestamp":"2025-02-23T17:57:03.911Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T17:57:03.916Z"}
+{"level":"warn","message":"Missing required fields in price calculation request.","timestamp":"2025-02-23T17:57:03.920Z"}
+{"level":"info","message":"GET /","timestamp":"2025-02-23T17:57:04.446Z"}
