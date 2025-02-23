@@ -65,4 +65,45 @@ describe("Stone API", () => {
     expect(res.body.stones.length).toBeGreaterThan(0);
     expect(res.body.stones[0].name).toMatch(/Taj Mahal/i);
   });
+
+  test("should return recommended stones based on type and color", async () => {
+    const stone1 = await Stone.create({
+      name: "Black Galaxy",
+      type: "granite",
+      color: "Black",
+      pricePerM2_2cm: 200,
+      pricePerM2_3cm: 250,
+      usage: ["kitchen"],
+      location: "Showroom A",
+    });
+
+    const stone2 = await Stone.create({
+      name: "Absolute Black",
+      type: "granite",
+      color: "Black",
+      pricePerM2_2cm: 180,
+      pricePerM2_3cm: 230,
+      usage: ["bathroom"],
+      location: "Showroom B",
+    });
+
+    const stone3 = await Stone.create({
+      name: "White Carrara",
+      type: "marble",
+      color: "White",
+      pricePerM2_2cm: 220,
+      pricePerM2_3cm: 270,
+      usage: ["stairs"],
+      location: "Showroom C",
+    });
+
+    const res = await request(app).get(
+      `/api/stones/recommendations/${stone1._id}`
+    );
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.length).toBeGreaterThan(0);
+    expect(res.body[0].type).toBe(stone1.type);
+    expect(res.body[0].color).toBe(stone1.color);
+  });
 });
