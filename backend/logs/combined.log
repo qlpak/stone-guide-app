@@ -165,3 +165,22 @@
 {"level":"info","message":"Price calculation successful for stone ID: 67bb53f9ab57596bf986feca","timestamp":"2025-02-23T16:59:37.649Z"}
 {"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T16:59:37.656Z"}
 {"level":"warn","message":"Missing required fields in price calculation request.","timestamp":"2025-02-23T16:59:37.659Z"}
+{"level":"info","message":"GET /api/stones/67bb616e6a3c2139e31bde00","timestamp":"2025-02-23T17:57:03.040Z"}
+{"level":"info","message":"GET /api/stones?type=quartzite&priceMin=100&priceMax=300&page=1&limit=5","timestamp":"2025-02-23T17:57:03.061Z"}
+{"level":"info","message":"Fetched stones list","query":{"limit":"5","page":"1","priceMax":"300","priceMin":"100","type":"quartzite"},"timestamp":"2025-02-23T17:57:03.078Z"}
+{"level":"info","message":"POST /api/stones","timestamp":"2025-02-23T17:57:03.089Z"}
+{"level":"info","message":"New stone created","stone":{"__v":0,"_id":"67bb616f6a3c2139e31bde05","color":"White","createdAt":"2025-02-23T17:57:03.093Z","location":"Showroom Table B","name":"Carrara","pricePerM2_2cm":200,"type":"marble","updatedAt":"2025-02-23T17:57:03.093Z","usage":["bathroom"]},"timestamp":"2025-02-23T17:57:03.095Z"}
+{"level":"info","message":"GET /api/stones/search?query=Taj%20Mahal","timestamp":"2025-02-23T17:57:03.099Z"}
+{"level":"info","message":"Stone search successful","query":{"query":"Taj Mahal"},"results":1,"timestamp":"2025-02-23T17:57:03.104Z"}
+{"level":"info","message":"GET /api/stones/recommendations/67bb616f6a3c2139e31bde08","timestamp":"2025-02-23T17:57:03.117Z"}
+{"id":"67bb616f6a3c2139e31bde08","level":"info","message":"Recommended stones retrieved","recommendations":1,"timestamp":"2025-02-23T17:57:03.124Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T17:57:03.697Z"}
+{"level":"info","message":"Exchange rates retrieved from API","timestamp":"2025-02-23T17:57:03.888Z"}
+{"level":"info","message":"Price calculation successful for stone ID: 67bb616f15c6c68c1a912053","timestamp":"2025-02-23T17:57:03.890Z"}
+{"areaM2":1.08,"level":"info","message":"Response body:","priceEUR":108,"pricePLN":449.21,"priceUSD":112.99,"timestamp":"2025-02-23T17:57:03.894Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T17:57:03.899Z"}
+{"level":"info","message":"Exchange rates retrieved from cache","timestamp":"2025-02-23T17:57:03.909Z"}
+{"level":"info","message":"Price calculation successful for stone ID: 67bb616f15c6c68c1a912053","timestamp":"2025-02-23T17:57:03.911Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-23T17:57:03.916Z"}
+{"level":"warn","message":"Missing required fields in price calculation request.","timestamp":"2025-02-23T17:57:03.920Z"}
+{"level":"info","message":"GET /","timestamp":"2025-02-23T17:57:04.446Z"}
