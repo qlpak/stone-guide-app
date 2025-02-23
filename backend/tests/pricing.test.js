@@ -33,6 +33,8 @@ describe("Pricing API", () => {
       thickness: "2cm",
     });
 
+    console.log("Response body:", res.body);
+
     expect(res.statusCode).toBe(200);
     expect(res.body).toHaveProperty("priceEUR");
     expect(res.body).toHaveProperty("pricePLN");

@@ -5,6 +5,8 @@ const pricingRoutes = require("./routes/pricing");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const morgan = require("morgan");
+const logger = require("./config/logger");
+const errorHandler = require("./middlewares/errorMiddleware");
 dotenv.config();
 
 const app = express();
@@ -13,8 +15,15 @@ app.use(express.json());
 app.use(helmet());
 app.use(morgan("dev"));
 
+app.use((req, res, next) => {
+  logger.info(`${req.method} ${req.originalUrl}`);
+  next();
+});
+
 app.use("/api/stones", stoneRoutes);
 app.use("/api/pricing", pricingRoutes);
+
+app.use(errorHandler);
 
 connectDB();
 
