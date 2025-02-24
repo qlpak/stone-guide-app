@@ -38,7 +38,33 @@ jobs:
           cd backend
           npm install
 
-      - name: Run tests
+      - name: Run tests with coverage
         run: |
           cd backend
-          npm test
+          npm test -- --coverage --maxWorkers=2
+
+      - name: Check if coverage is 100%
+        run: |
+          cd backend
+          if [ ! -f coverage/coverage-final.json ]; then
+            echo "coverage-final.json not found!"
+            exit 1
+          fi
+          TOTAL_COVERAGE=$(node -e "
+          const coverage = require('./coverage/coverage-final.json');
+          let totalStatements = 0, coveredStatements = 0;
+          Object.values(coverage).forEach(file => {
+            if (file.s) {
+              totalStatements += Object.keys(file.s).length; 
+              coveredStatements += Object.values(file.s).filter(count => count > 0).length;
+            }
+          });
+          console.log(((coveredStatements / totalStatements) * 100).toFixed(2));
+          ")
+          echo "Total Statements Coverage: $TOTAL_COVERAGE%"
+          if (( $(echo \"$TOTAL_COVERAGE < 100\" | bc -l) )); then
+            echo "Code coverage is below 100%! Failing pipeline."
+            exit 1
+          else
+            echo "Code coverage is 100%. Proceeding..."
+          fi
