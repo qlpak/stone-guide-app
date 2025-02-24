@@ -43,7 +43,7 @@ jobs:
           cd backend
           npm test -- --coverage --maxWorkers=2
 
-            - name: Check if coverage is 100%
+      - name: Check if coverage is 100%
         run: |
           cd backend
           if [ ! -f coverage/coverage-final.json ]; then
@@ -68,4 +68,3 @@ jobs:
           else
             echo "Code coverage is 100%. Proceeding..."
           fi
-
