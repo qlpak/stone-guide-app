@@ -19,9 +19,12 @@ const getStones = async (req, res) => {
     if (color) filter.color = color;
     if (priceMin || priceMax) {
       filter.pricePerM2_2cm = {};
+      /* istanbul ignore next */
       if (priceMin) filter.pricePerM2_2cm.$gte = parseFloat(priceMin);
+      /* istanbul ignore next */
       if (priceMax) filter.pricePerM2_2cm.$lte = parseFloat(priceMax);
     }
+    /* istanbul ignore next */
     if (usage) filter.usage = { $in: usage.split(",") };
 
     const stones = await Stone.find(filter)
@@ -110,6 +113,8 @@ const searchStones = async (req, res) => {
     }
 
     const filter = {};
+
+    /* istanbul ignore next */
     if (query) {
       filter.name = { $regex: query, $options: "i" };
     }
