@@ -46,7 +46,7 @@ jobs:
       - name: Check if coverage is 100%
         run: |
           cd backend
-          TOTAL_COVERAGE=$(node -e "console.log(require('./coverage/coverage-summary.json').total.statements.pct)")
+          TOTAL_COVERAGE=$(node -e "console.log(require('./coverage/coverage-final.json').total.statements.pct)")
           echo "Total Coverage: $TOTAL_COVERAGE%"
           if (( $(echo "$TOTAL_COVERAGE < 100" | bc -l) )); then
             echo "Code coverage is below 100%! Failing pipeline."
