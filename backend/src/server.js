@@ -30,9 +30,10 @@ connectDB();
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the Stone Guide API" });
 });
-
+/* istanbul ignore next */
 const PORT = process.env.PORT || 5001;
 
+/* istanbul ignore next */
 if (process.env.NODE_ENV !== "test") {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

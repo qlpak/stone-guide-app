@@ -2,6 +2,7 @@ const axios = require("axios");
 const Stone = require("../models/Stone");
 const logger = require("../config/logger");
 const redis = require("../config/redis");
+const mongoose = require("mongoose");
 
 const convertToM2 = (length, width, unit) => {
   if (unit === "cm") {
@@ -66,6 +67,14 @@ const calculatePrice = async (req, res) => {
         .json({ error: "Thickness must be either '2cm' or '3cm'." });
     }
 
+    if (length <= 0 || width <= 0) {
+      return res.status(400).json({ error: "Invalid dimensions provided." });
+    }
+
+    if (!mongoose.Types.ObjectId.isValid(stoneId)) {
+      return res.status(400).json({ error: "Invalid stone ID format." });
+    }
+
     const stone = await Stone.findById(stoneId);
     if (!stone) {
       logger.warn("Stone not found with ID: " + stoneId);
@@ -91,6 +100,12 @@ const calculatePrice = async (req, res) => {
 
     logger.info("Price calculation successful for stone ID: " + stoneId);
 
+    if (additionalCosts && isNaN(additionalCosts)) {
+      return res
+        .status(400)
+        .json({ error: "Additional costs must be a number." });
+    }
+
     res.json({
       areaM2,
       priceEUR: totalPriceEUR,
@@ -103,4 +118,4 @@ const calculatePrice = async (req, res) => {
   }
 };
 
-module.exports = { calculatePrice };
+module.exports = { calculatePrice, getExchangeRate, convertToM2 };

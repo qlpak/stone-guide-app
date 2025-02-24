@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
-    "test": "NODE_ENV=test jest --detectOpenHandles --forceExit",
+    "test": "NODE_ENV=test jest --detectOpenHandles --forceExit --coverage",
     "lint": "eslint . --ext .js,.ts",
     "docker-build": "docker-compose up --build",
     "docker-stop": "docker-compose down"
