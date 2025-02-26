@@ -2826,3 +2826,10 @@
 {"level":"info","message":"POST /api/pricing","timestamp":"2025-02-24T12:30:29.127Z"}
 {"level":"info","message":"POST /api/stones","timestamp":"2025-02-24T12:30:29.133Z"}
 {"body":{"name":"Test Stone"},"level":"warn","message":"Missing required fields","timestamp":"2025-02-24T12:30:29.136Z"}
+{"level":"info","message":"GET /","timestamp":"2025-02-26T13:25:23.451Z"}
+{"level":"info","message":"GET /api/nonexistent","timestamp":"2025-02-26T13:25:23.465Z"}
+{"level":"info","message":"GET /api/stones","timestamp":"2025-02-26T13:25:23.483Z"}
+{"level":"info","message":"Fetched stones list","query":{},"timestamp":"2025-02-26T13:25:23.506Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-02-26T13:25:23.521Z"}
+{"level":"info","message":"POST /api/stones","timestamp":"2025-02-26T13:25:23.543Z"}
+{"body":{"name":"Test Stone"},"level":"warn","message":"Missing required fields","timestamp":"2025-02-26T13:25:23.550Z"}
