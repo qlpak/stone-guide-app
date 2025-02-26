@@ -1,46 +1,17 @@
-const Stone = require("../models/Stone");
 const logger = require("../config/logger");
+const {
+  getStonesService,
+  getStoneByIdService,
+  createStoneService,
+  searchStonesService,
+  getRecommendedStonesService,
+} = require("../services/stoneService");
 
 const getStones = async (req, res) => {
   try {
-    const {
-      type,
-      color,
-      priceMin,
-      priceMax,
-      usage,
-      page = 1,
-      limit = 10,
-    } = req.query;
-
-    const filter = {};
-
-    if (type) filter.type = type;
-    if (color) filter.color = color;
-    if (priceMin || priceMax) {
-      filter.pricePerM2_2cm = {};
-      /* istanbul ignore next */
-      if (priceMin) filter.pricePerM2_2cm.$gte = parseFloat(priceMin);
-      /* istanbul ignore next */
-      if (priceMax) filter.pricePerM2_2cm.$lte = parseFloat(priceMax);
-    }
-    /* istanbul ignore next */
-    if (usage) filter.usage = { $in: usage.split(",") };
-
-    const stones = await Stone.find(filter)
-      .skip((page - 1) * limit)
-      .limit(parseInt(limit));
-
-    const total = await Stone.countDocuments(filter);
-
+    const result = await getStonesService(req.query);
     logger.info("Fetched stones list", { query: req.query });
-
-    res.json({
-      stones,
-      total,
-      page: parseInt(page),
-      totalPages: Math.ceil(total / limit),
-    });
+    res.json(result);
   } catch (error) {
     logger.error("Error fetching stones", { error });
     res.status(500).json({ error: "Internal Server Error" });
@@ -49,7 +20,7 @@ const getStones = async (req, res) => {
 
 const getStoneById = async (req, res) => {
   try {
-    const stone = await Stone.findById(req.params.id);
+    const stone = await getStoneByIdService(req.params.id);
     if (!stone) {
       logger.warn("Stone not found", { id: req.params.id });
       return res.status(404).json({ message: "Stone not found" });
@@ -77,7 +48,6 @@ const createStone = async (req, res) => {
       logger.warn("Missing required fields", { body: req.body });
       return res.status(400).json({ error: "Missing required fields." });
     }
-
     if (!pricePerM2_2cm && !pricePerM2_3cm) {
       logger.warn("At least one price is required", { body: req.body });
       return res
@@ -85,16 +55,7 @@ const createStone = async (req, res) => {
         .json({ error: "At least one price (2cm or 3cm) is required." });
     }
 
-    const stone = await Stone.create({
-      name,
-      type,
-      color,
-      pricePerM2_2cm,
-      pricePerM2_3cm,
-      usage,
-      location,
-    });
-
+    const stone = await createStoneService(req.body);
     logger.info("New stone created", { stone });
     res.status(201).json(stone);
   } catch (error) {
@@ -106,30 +67,16 @@ const createStone = async (req, res) => {
 const searchStones = async (req, res) => {
   try {
     const { query, usage } = req.query;
-
     if (!query && !usage) {
       logger.warn("Missing search parameters", { query: req.query });
       return res.status(400).json({ error: "Missing search parameters" });
     }
 
-    const filter = {};
-
-    /* istanbul ignore next */
-    if (query) {
-      filter.name = { $regex: query, $options: "i" };
-    }
-
-    if (usage && typeof usage === "string") {
-      filter.usage = { $in: usage.split(",") };
-    }
-
-    const stones = await Stone.find(filter);
-
+    const stones = await searchStonesService(query, usage);
     if (!stones.length) {
       logger.warn("No stones found for search query", { query: req.query });
       return res.status(404).json({ error: "No stones found" });
     }
-
     logger.info("Stone search successful", {
       query: req.query,
       results: stones.length,
@@ -143,22 +90,13 @@ const searchStones = async (req, res) => {
 
 const getRecommendedStones = async (req, res) => {
   try {
-    const { id } = req.params;
-    const stone = await Stone.findById(id);
-
-    if (!stone) {
-      logger.warn("Stone not found for recommendations", { id });
+    const recommendedStones = await getRecommendedStonesService(req.params.id);
+    if (!recommendedStones) {
+      logger.warn("Stone not found for recommendations", { id: req.params.id });
       return res.status(404).json({ error: "Stone not found." });
     }
-
-    const recommendedStones = await Stone.find({
-      type: stone.type,
-      color: stone.color,
-      _id: { $ne: stone._id },
-    }).limit(5);
-
     logger.info("Recommended stones retrieved", {
-      id,
+      id: req.params.id,
       recommendations: recommendedStones.length,
     });
     res.json(recommendedStones);
