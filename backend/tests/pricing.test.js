@@ -4,10 +4,8 @@ const Stone = require("../src/models/Stone");
 const mongoose = require("mongoose");
 const redis = require("../src/config/redis");
 const logger = require("../src/config/logger");
-const {
-  getExchangeRate,
-  convertToM2,
-} = require("../src/controllers/pricingController");
+const { getExchangeRate } = require("../src/utils/exchangeRate");
+const { convertToM2 } = require("../src/utils/convertToM2");
 
 const axios = require("axios");
 
