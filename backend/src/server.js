@@ -1,4 +1,7 @@
 const express = require("express");
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+const path = require("path");
 const connectDB = require("./config/database");
 const stoneRoutes = require("./routes/stones");
 const pricingRoutes = require("./routes/pricing");
@@ -22,14 +25,36 @@ app.use((req, res, next) => {
 
 app.use("/api/stones", stoneRoutes);
 app.use("/api/pricing", pricingRoutes);
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to the Stone Guide API" });
+});
+
+const swaggerOptions = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "Stone Guide API",
+      version: "1.0.0",
+      description: "API for searching, recommending, and pricing natural stone",
+    },
+    servers: [
+      {
+        url: "http://localhost:5001",
+      },
+    ],
+  },
+  apis: [path.join(__dirname, "./routes/*.js")],
+};
+
+const swaggerDocs = swaggerJsdoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+console.log("Swagger available at: http://localhost:5001/api-docs");
 
 app.use(errorHandler);
 
 connectDB();
 
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to the Stone Guide API" });
-});
 /* istanbul ignore next */
 const PORT = process.env.PORT || 5001;
 
