@@ -1,2 +1,3 @@
 backend/node_modules/
 backend/src/.DS_Store
+backend/coverage/lcov-report
