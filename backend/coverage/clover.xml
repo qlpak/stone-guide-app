@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1740652875770" clover="3.2.0">
-  <project timestamp="1740652875770" name="All files">
-    <metrics statements="249" coveredstatements="249" conditionals="100" coveredconditionals="96" methods="24" coveredmethods="24" elements="373" coveredelements="369" complexity="0" loc="249" ncloc="249" packages="8" files="16" classes="16"/>
+<coverage generated="1744796013567" clover="3.2.0">
+  <project timestamp="1744796013567" name="All files">
+    <metrics statements="260" coveredstatements="260" conditionals="100" coveredconditionals="96" methods="24" coveredmethods="24" elements="384" coveredelements="380" complexity="0" loc="260" ncloc="260" packages="8" files="17" classes="17"/>
     <package name="src">
       <metrics statements="31" coveredstatements="31" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
       <file name="server.js" path="/Users/lukaszkulpaczynski/Desktop/praca/stone-guide-app/stone-guide-app/backend/src/server.js">
@@ -40,7 +40,7 @@
       </file>
     </package>
     <package name="src.config">
-      <metrics statements="21" coveredstatements="21" conditionals="6" coveredconditionals="6" methods="3" coveredmethods="3"/>
+      <metrics statements="14" coveredstatements="14" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
       <file name="database.js" path="/Users/lukaszkulpaczynski/Desktop/praca/stone-guide-app/stone-guide-app/backend/src/config/database.js">
         <metrics statements="11" coveredstatements="11" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
         <line num="1" count="4" type="stmt"/>
@@ -61,16 +61,6 @@
         <line num="3" count="2" type="stmt"/>
         <line num="16" count="2" type="stmt"/>
       </file>
-      <file name="redis.js" path="/Users/lukaszkulpaczynski/Desktop/praca/stone-guide-app/stone-guide-app/backend/src/config/redis.js">
-        <metrics statements="7" coveredstatements="7" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
-        <line num="1" count="7" type="stmt"/>
-        <line num="3" count="7" type="stmt"/>
-        <line num="8" count="7" type="stmt"/>
-        <line num="9" count="35" type="stmt"/>
-        <line num="12" count="7" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="16" count="7" type="stmt"/>
-      </file>
     </package>
     <package name="src.controllers">
       <metrics statements="68" coveredstatements="68" conditionals="27" coveredconditionals="27" methods="6" coveredmethods="6"/>
@@ -79,13 +69,13 @@
         <line num="1" count="4" type="stmt"/>
         <line num="2" count="4" type="stmt"/>
         <line num="4" count="4" type="stmt"/>
-        <line num="5" count="15" type="stmt"/>
-        <line num="6" count="15" type="stmt"/>
+        <line num="5" count="14" type="stmt"/>
+        <line num="6" count="14" type="stmt"/>
         <line num="7" count="6" type="stmt"/>
-        <line num="9" count="9" type="stmt"/>
-        <line num="11" count="9" type="cond" truecount="4" falsecount="0"/>
-        <line num="12" count="9" type="cond" truecount="2" falsecount="0"/>
-        <line num="13" count="9" type="stmt"/>
+        <line num="9" count="8" type="stmt"/>
+        <line num="11" count="8" type="cond" truecount="4" falsecount="0"/>
+        <line num="12" count="8" type="cond" truecount="2" falsecount="0"/>
+        <line num="13" count="8" type="stmt"/>
         <line num="17" count="4" type="stmt"/>
       </file>
       <file name="stoneController.js" path="/Users/lukaszkulpaczynski/Desktop/praca/stone-guide-app/stone-guide-app/backend/src/controllers/stoneController.js">
@@ -150,14 +140,30 @@
       </file>
     </package>
     <package name="src.middlewares">
-      <metrics statements="6" coveredstatements="6" conditionals="10" coveredconditionals="7" methods="1" coveredmethods="1"/>
+      <metrics statements="16" coveredstatements="16" conditionals="14" coveredconditionals="11" methods="3" coveredmethods="3"/>
+      <file name="auth.js" path="/Users/lukaszkulpaczynski/Desktop/praca/stone-guide-app/stone-guide-app/backend/src/middlewares/auth.js">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="1" count="2" type="stmt"/>
+        <line num="2" count="2" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="17" count="2" type="stmt"/>
+      </file>
+      <file name="authorizeRole.js" path="/Users/lukaszkulpaczynski/Desktop/praca/stone-guide-app/stone-guide-app/backend/src/middlewares/authorizeRole.js">
+        <metrics statements="6" coveredstatements="6" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>
+        <line num="1" count="5" type="stmt"/>
+        <line num="2" count="7" type="stmt"/>
+        <line num="3" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="5" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="2" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+      </file>
       <file name="errorMiddleware.js" path="/Users/lukaszkulpaczynski/Desktop/praca/stone-guide-app/stone-guide-app/backend/src/middlewares/errorMiddleware.js">
         <metrics statements="6" coveredstatements="6" conditionals="10" coveredconditionals="7" methods="1" coveredmethods="1"/>
         <line num="1" count="5" type="stmt"/>
         <line num="3" count="5" type="stmt"/>
-        <line num="4" count="5" type="stmt"/>
-        <line num="7" count="5" type="cond" truecount="3" falsecount="1"/>
-        <line num="9" count="5" type="stmt"/>
+        <line num="4" count="6" type="stmt"/>
+        <line num="7" count="6" type="cond" truecount="3" falsecount="1"/>
+        <line num="9" count="6" type="stmt"/>
         <line num="15" count="5" type="stmt"/>
       </file>
     </package>
@@ -173,26 +179,34 @@
       </file>
     </package>
     <package name="src.routes">
-      <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="22" coveredstatements="22" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="pricing.js" path="/Users/lukaszkulpaczynski/Desktop/praca/stone-guide-app/stone-guide-app/backend/src/routes/pricing.js">
-        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="4" type="stmt"/>
         <line num="4" count="4" type="stmt"/>
-        <line num="6" count="4" type="stmt"/>
-        <line num="34" count="4" type="stmt"/>
-        <line num="36" count="4" type="stmt"/>
+        <line num="5" count="4" type="stmt"/>
+        <line num="7" count="4" type="stmt"/>
+        <line num="63" count="4" type="stmt"/>
+        <line num="65" count="4" type="stmt"/>
       </file>
       <file name="stones.js" path="/Users/lukaszkulpaczynski/Desktop/praca/stone-guide-app/stone-guide-app/backend/src/routes/stones.js">
-        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <metrics statements="16" coveredstatements="16" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="4" type="stmt"/>
         <line num="8" count="4" type="stmt"/>
+        <line num="9" count="4" type="stmt"/>
         <line num="10" count="4" type="stmt"/>
-        <line num="29" count="4" type="stmt"/>
-        <line num="48" count="4" type="stmt"/>
-        <line num="67" count="4" type="stmt"/>
-        <line num="79" count="4" type="stmt"/>
-        <line num="107" count="4" type="stmt"/>
-        <line num="109" count="4" type="stmt"/>
+        <line num="18" count="4" type="stmt"/>
+        <line num="37" count="4" type="stmt"/>
+        <line num="56" count="4" type="stmt"/>
+        <line num="75" count="4" type="stmt"/>
+        <line num="87" count="4" type="stmt"/>
+        <line num="115" count="4" type="stmt"/>
+        <line num="132" count="4" type="stmt"/>
+        <line num="158" count="4" type="stmt"/>
+        <line num="182" count="4" type="stmt"/>
+        <line num="206" count="4" type="stmt"/>
+        <line num="258" count="4" type="stmt"/>
+        <line num="260" count="4" type="stmt"/>
       </file>
     </package>
     <package name="src.services">
@@ -205,7 +219,7 @@
         <line num="4" count="4" type="stmt"/>
         <line num="5" count="4" type="stmt"/>
         <line num="7" count="4" type="stmt"/>
-        <line num="8" count="15" type="stmt"/>
+        <line num="8" count="14" type="stmt"/>
         <line num="10" count="9" type="stmt"/>
         <line num="12" count="9" type="stmt"/>
         <line num="13" count="8" type="cond" truecount="2" falsecount="0"/>
@@ -308,15 +322,15 @@
         <line num="1" count="4" type="stmt"/>
         <line num="2" count="4" type="stmt"/>
         <line num="4" count="4" type="stmt"/>
-        <line num="12" count="15" type="cond" truecount="7" falsecount="0"/>
+        <line num="12" count="14" type="cond" truecount="7" falsecount="0"/>
         <line num="13" count="1" type="stmt"/>
-        <line num="18" count="14" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="13" type="cond" truecount="2" falsecount="0"/>
         <line num="19" count="1" type="stmt"/>
         <line num="20" count="1" type="stmt"/>
-        <line num="23" count="13" type="cond" truecount="4" falsecount="0"/>
+        <line num="23" count="12" type="cond" truecount="4" falsecount="0"/>
         <line num="24" count="1" type="stmt"/>
-        <line num="27" count="12" type="cond" truecount="2" falsecount="0"/>
-        <line num="28" count="2" type="stmt"/>
+        <line num="27" count="11" type="cond" truecount="2" falsecount="0"/>
+        <line num="28" count="1" type="stmt"/>
         <line num="31" count="10" type="cond" truecount="4" falsecount="0"/>
         <line num="32" count="1" type="stmt"/>
         <line num="35" count="9" type="stmt"/>

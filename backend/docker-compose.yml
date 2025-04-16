@@ -1,4 +1,5 @@
 version: "3.8"
+
 services:
   mongo:
     image: mongo
@@ -37,8 +38,23 @@ services:
     networks:
       - stone-network
 
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.1
+    container_name: stone-keycloak
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: "admin"
+      KEYCLOAK_ADMIN_PASSWORD: "admin"
+    ports:
+      - "8080:8080"
+    volumes:
+      - keycloak-data:/opt/keycloak/data
+    networks:
+      - stone-network
+
 volumes:
   mongo-data:
+  keycloak-data:
 
 networks:
   stone-network:
