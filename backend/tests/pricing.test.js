@@ -1,3 +1,12 @@
+jest.mock("../src/middlewares/auth", () => (req, res, next) => {
+  req.auth = {
+    realm_access: {
+      roles: ["user"],
+    },
+  };
+  next();
+});
+
 const request = require("supertest");
 const app = require("../src/server");
 const Stone = require("../src/models/Stone");

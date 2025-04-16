@@ -1,5 +1,15 @@
 const mongoose = require("mongoose");
 const { MongoMemoryServer } = require("mongodb-memory-server");
+jest.mock("../src/config/redis", () => ({
+  get: jest.fn(),
+  set: jest.fn(),
+  flushall: jest.fn(),
+  quit: jest.fn(),
+  on: jest.fn(),
+  emit: jest.fn(),
+  status: "ready",
+}));
+
 const redis = require("../src/config/redis");
 
 let mongoServer;

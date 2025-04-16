@@ -29,7 +29,7 @@ describe("App Initialization", () => {
         unit: "cm",
         thickness: "2cm",
       });
-      expect([400, 500]).toContain(res.statusCode);
+      expect([400, 401, 500]).toContain(res.statusCode);
     });
   });
 

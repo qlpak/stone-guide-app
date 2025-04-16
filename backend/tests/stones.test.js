@@ -11,6 +11,13 @@ jest.mock("../src/config/logger", () => ({
   error: jest.fn(),
 }));
 
+jest.mock("../src/middlewares/auth", () => (req, res, next) => {
+  req.auth = {
+    realm_access: { roles: ["admin"] }, // or ['user']
+  };
+  next();
+});
+
 describe("Stone API", () => {
   let stoneId;
 
