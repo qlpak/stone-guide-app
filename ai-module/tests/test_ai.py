@@ -4,6 +4,8 @@ from app import create_app
 from flask import Response
 import pytest
 from unittest.mock import patch
+import numpy as np
+from app.utils import predict_top3
 
 app = create_app()
 client = app.test_client()
@@ -48,3 +50,18 @@ def test_post_with_file():
     result = response.get_json()
     assert result[0]["stone"] == "taj-mahal"
 
+def test_predict_top3_real():
+    img_path = TEST_IMAGE_PATH 
+
+    if not os.path.exists("model/resnet50_best.h5"):
+        pytest.skip("Model file not found – skipping real model test")
+
+    result = predict_top3(img_path)
+
+    assert isinstance(result, list)
+    assert len(result) == 3
+    for r in result:
+        assert "rank" in r
+        assert "stone" in r
+        assert "probability" in r
+        assert isinstance(r["probability"], float)
