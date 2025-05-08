@@ -93,7 +93,9 @@ jobs:
       - name: Run AI tests with coverage
         run: |
           cd ai-module
-          PYTHONPATH=. pytest --cov=app --cov-report term-missing tests/
+          rm -f .coverage
+          rm -rf htmlcov
+          PYTHONPATH=. pytest --cov=app --cov-report=term-missing tests/
 
       - name: Check if AI module coverage is 100%
         run: |
