@@ -7,6 +7,7 @@ from unittest.mock import patch
 import numpy as np
 from app.utils import predict_top3
 from unittest.mock import patch, MagicMock
+from PIL import Image
 
 app = create_app()
 client = app.test_client()
@@ -88,3 +89,23 @@ def test_predict_top3_with_mocked_model():
         assert isinstance(result, list)
         assert len(result) == 3
         assert result[0]["probability"] > 0.8
+
+def test_predict_top3_forces_model_load():
+    from app import utils
+
+    utils.model = None
+
+    fake_pred = np.zeros(203)
+    fake_pred[55] = 0.9
+    fake_pred[77] = 0.08
+    fake_pred[88] = 0.02
+
+    img_path = "static/uploads/test_force_load.jpg"
+    img = Image.new("RGB", (224, 224), color=(123, 123, 123))
+    img.save(img_path)
+
+    with patch("app.utils.tf.keras.models.load_model") as mock_loader:
+        mock_loader.return_value.predict = MagicMock(return_value=[fake_pred])
+        result = utils.predict_top3(img_path)
+
+    assert result[0]["stone"]
