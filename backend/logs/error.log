@@ -157,3 +157,5 @@
 {"level":"error","message":"No authorization token was found - POST /api/pricing","timestamp":"2025-04-16T09:27:44.033Z"}
 {"level":"error","message":"No authorization token was found - POST /api/pricing","timestamp":"2025-04-16T09:31:14.499Z"}
 {"level":"error","message":"No authorization token was found - POST /api/pricing","timestamp":"2025-04-16T09:33:29.325Z"}
+{"level":"error","message":"No authorization token was found - POST /api/pricing","timestamp":"2025-04-16T09:40:51.027Z"}
+{"level":"error","message":"No authorization token was found - POST /api/pricing","timestamp":"2025-05-08T07:27:53.279Z"}
