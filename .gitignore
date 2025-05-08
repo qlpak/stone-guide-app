@@ -2,5 +2,14 @@ backend/node_modules/
 backend/src/.DS_Store
 .DS_Store
 backend/coverage/lcov-report
-backend/secrets/
+secrets/
 backend/logs/*.log
+ai-module/static/uploads
+ai-module/app/__pycache__/
+ai-module/data/predictions.csv
+ai-module/data/labels.csv
+ai-module/tests/__pycache__
+.coverage
+ai-module/htmlcov/
+ai-module/model/resnet50_best.h5
+ai-module/.pytest_cache
