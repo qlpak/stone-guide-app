@@ -1,4 +1,4 @@
-name: Backend Tests
+name: Backend + AI Tests
 
 on:
   push:
@@ -10,7 +10,8 @@ on:
   workflow_dispatch: {}
 
 jobs:
-  test:
+  backend-test:
+    name: Backend Tests
     runs-on: ubuntu-latest
 
     services:
@@ -67,4 +68,41 @@ jobs:
             exit 1
           else
             echo "Code coverage is 100%. Proceeding..."
+          fi
+
+  ai-test:
+    name: AI Module Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          cd ai-module
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+
+      - name: Run AI tests with coverage
+        run: |
+          cd ai-module
+          PYTHONPATH=. pytest --cov=app --cov-report term-missing tests/
+
+      - name: Check if AI module coverage is 100%
+        run: |
+          cd ai-module
+          TOTAL_COVERAGE=$(pytest --cov=app --cov-report=term tests/ | tee /dev/tty | grep "TOTAL" | awk '{print $4}' | sed 's/%//')
+          echo "AI Module Coverage: $TOTAL_COVERAGE%"
+          if (( $(echo "$TOTAL_COVERAGE < 100" | bc -l) )); then
+            echo "AI module coverage is below 100%! Failing pipeline."
+            exit 1
+          else
+            echo "AI module coverage is 100%"
           fi
