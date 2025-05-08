@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+process.env.MONGO_URI = "mongodb://mongodb:27017/stone-guide-app";
 const connectDB = require("../src/config/database");
 
 jest.mock("mongoose", () => ({

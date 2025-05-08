@@ -1,15 +1,21 @@
-FROM node:18
+FROM node:18-alpine AS builder
 
-WORKDIR /backend
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
 
-COPY package.json package-lock.json ./
+FROM node:18-alpine
 
-RUN npm install
+RUN apk add --no-cache curl
 
-COPY src/ ./src/
+WORKDIR /app
 
-EXPOSE 5001
+COPY --from=builder /app/node_modules ./node_modules
 
-WORKDIR /backend/src
+COPY . .
+
+ARG PORT=5001
+ENV PORT=${PORT}
+EXPOSE ${PORT}
 
 CMD ["npm", "run", "dev"]
