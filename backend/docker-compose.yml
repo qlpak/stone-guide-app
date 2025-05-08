@@ -11,6 +11,11 @@ services:
       - mongo-data:/data/db
     networks:
       - stone-network
+    healthcheck:
+      test: ["CMD-SHELL", "echo 'db.runCommand({ ping: 1 })' | mongosh --quiet"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   redis:
     image: "redis:alpine"
@@ -20,9 +25,17 @@ services:
       - "6379:6379"
     networks:
       - stone-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
   backend:
-    build: .
+    build:
+      context: .
+      args:
+        - PORT=5001
     container_name: stone-guide-backend
     restart: always
     ports:
@@ -33,10 +46,19 @@ services:
     env_file:
       - .env
     volumes:
-      - ./src:/backend/src
-      - /backend/node_modules
+      - .:/app
+      - /app/node_modules
     networks:
       - stone-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5001"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    secrets:
+    - mongo_uri
+    - redis_host
+    - redis_port
 
   keycloak:
     image: quay.io/keycloak/keycloak:24.0.1
@@ -51,6 +73,11 @@ services:
       - keycloak-data:/opt/keycloak/data
     networks:
       - stone-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
 
 volumes:
   mongo-data:
@@ -59,3 +86,11 @@ volumes:
 networks:
   stone-network:
     driver: bridge
+
+secrets:
+  mongo_uri:
+    file: ./secrets/mongo_uri.txt
+  redis_host:
+    file: ./secrets/redis_host.txt
+  redis_port:
+    file: ./secrets/redis_port.txt
