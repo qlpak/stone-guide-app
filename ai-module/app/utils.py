@@ -6,7 +6,7 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.applications.resnet import preprocess_input
 
-model = tf.keras.models.load_model("model/resnet50_best.h5")
+model = None
 
 with open("data/class_indices.json") as f:
     idx_to_class = json.load(f)
@@ -20,6 +20,10 @@ def save_image(file):
     return path
 
 def predict_top3(img_path):
+    global model
+    if model is None:
+        model = tf.keras.models.load_model("model/resnet50_best.h5")
+
     img = image.load_img(img_path, target_size=(224, 224))
     img_array = image.img_to_array(img)
     img_array = preprocess_input(img_array)
@@ -31,11 +35,10 @@ def predict_top3(img_path):
     top_3_probs_norm = top_3_probs / top_3_probs.sum()
 
     return [
-    {
-        "rank": i + 1,
-        "stone": idx_to_class.get(str(idx), f"Class {idx}"), 
-        "probability": round(float(prob), 4)
-    }
-    for i, (idx, prob) in enumerate(zip(top_3_idx, top_3_probs_norm))
-]
-
+        {
+            "rank": i + 1,
+            "stone": idx_to_class.get(str(idx), f"Class {idx}"),
+            "probability": round(float(prob), 4)
+        }
+        for i, (idx, prob) in enumerate(zip(top_3_idx, top_3_probs_norm))
+    ]
