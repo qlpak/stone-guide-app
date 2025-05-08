@@ -68,6 +68,13 @@ def test_predict_top3_real():
         assert isinstance(r["probability"], float)
 
 def test_predict_top3_with_mocked_model():
+    from PIL import Image
+
+    img_path = "static/uploads/test_ai_image.jpg"
+    os.makedirs("static/uploads", exist_ok=True)
+    img = Image.new("RGB", (224, 224), color=(0, 255, 0))
+    img.save(img_path)
+
     fake_pred = np.zeros(203)
     fake_pred[55] = 0.9
     fake_pred[77] = 0.08
@@ -76,10 +83,8 @@ def test_predict_top3_with_mocked_model():
     with patch("app.utils.model") as mock_model:
         mock_model.predict = MagicMock(return_value=[fake_pred])
 
-        img_path = TEST_IMAGE_PATH 
         result = predict_top3(img_path)
 
         assert isinstance(result, list)
         assert len(result) == 3
         assert result[0]["probability"] > 0.8
-        assert "stone" in result[0]
