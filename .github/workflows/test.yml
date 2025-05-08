@@ -98,7 +98,8 @@ jobs:
       - name: Check if AI module coverage is 100%
         run: |
           cd ai-module
-          TOTAL_COVERAGE=$(pytest --cov=app --cov-report=term tests/ | tee /dev/tty | grep "TOTAL" | awk '{print $4}' | sed 's/%//')
+          TOTAL_COVERAGE=$(PYTHONPATH=. pytest --cov=app --cov-report=term tests/ | tee result.log | grep "TOTAL" | awk '{print $4}' | sed 's/%//')
+          cat result.log
           echo "AI Module Coverage: $TOTAL_COVERAGE%"
           if (( $(echo "$TOTAL_COVERAGE < 100" | bc -l) )); then
             echo "AI module coverage is below 100%! Failing pipeline."
