@@ -33,16 +33,12 @@ describe("Error Middleware", () => {
   test("should return correct status and message for user error", async () => {
     const res = await request(app).get("/error");
 
-    console.log("DEBUG RESPONSE:", res.body);
-
     expect(res.statusCode).toBe(400);
     expect(res.body).toHaveProperty("message", "Test error");
   });
 
   test("should set status to 500 if it was originally 200", async () => {
     const res = await request(app).get("/force-500");
-
-    console.log("DEBUG RESPONSE:", res.body);
 
     expect(res.statusCode).toBe(500);
     expect(res.body).toHaveProperty("message", "Forced 500 error");
@@ -52,8 +48,6 @@ describe("Error Middleware", () => {
     process.env.NODE_ENV = "development";
     const res = await request(app).get("/server-error");
 
-    console.log("DEBUG RESPONSE:", res.body);
-
     expect(res.statusCode).toBe(500);
     expect(res.body).toHaveProperty("message", "Unexpected server error");
     expect(res.body.stack).toBeDefined();
@@ -62,8 +56,6 @@ describe("Error Middleware", () => {
   test("should not include stack trace in production mode", async () => {
     process.env.NODE_ENV = "production";
     const res = await request(app).get("/server-error");
-
-    console.log("DEBUG RESPONSE:", res.body);
 
     expect(res.statusCode).toBe(500);
     expect(res.body).toHaveProperty("message", "Unexpected server error");

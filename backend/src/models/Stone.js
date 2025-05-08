@@ -28,7 +28,12 @@ const StoneSchema = new mongoose.Schema(
         required: true,
       },
     ],
-    location: { type: String, required: true },
+    location: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
   },
   { timestamps: true }
 );

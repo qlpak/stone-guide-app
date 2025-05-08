@@ -3099,3 +3099,19 @@
 {"level":"error","message":"No authorization token was found - POST /api/pricing","timestamp":"2025-04-16T09:33:29.325Z"}
 {"level":"info","message":"POST /api/stones","timestamp":"2025-04-16T09:33:29.334Z"}
 {"body":{"name":"Test Stone"},"level":"warn","message":"Missing required fields","timestamp":"2025-04-16T09:33:29.336Z"}
+{"level":"info","message":"GET /","timestamp":"2025-04-16T09:40:50.960Z"}
+{"level":"info","message":"GET /api/nonexistent","timestamp":"2025-04-16T09:40:50.977Z"}
+{"level":"info","message":"GET /api/stones","timestamp":"2025-04-16T09:40:50.986Z"}
+{"level":"info","message":"Fetched stones list","query":{},"timestamp":"2025-04-16T09:40:51.011Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-04-16T09:40:51.022Z"}
+{"level":"error","message":"No authorization token was found - POST /api/pricing","timestamp":"2025-04-16T09:40:51.027Z"}
+{"level":"info","message":"POST /api/stones","timestamp":"2025-04-16T09:40:51.037Z"}
+{"body":{"name":"Test Stone"},"level":"warn","message":"Missing required fields","timestamp":"2025-04-16T09:40:51.040Z"}
+{"level":"info","message":"GET /","timestamp":"2025-05-08T07:27:53.240Z"}
+{"level":"info","message":"GET /api/nonexistent","timestamp":"2025-05-08T07:27:53.252Z"}
+{"level":"info","message":"GET /api/stones","timestamp":"2025-05-08T07:27:53.260Z"}
+{"level":"info","message":"Fetched stones list","query":{},"timestamp":"2025-05-08T07:27:53.268Z"}
+{"level":"info","message":"POST /api/pricing","timestamp":"2025-05-08T07:27:53.276Z"}
+{"level":"error","message":"No authorization token was found - POST /api/pricing","timestamp":"2025-05-08T07:27:53.279Z"}
+{"level":"info","message":"POST /api/stones","timestamp":"2025-05-08T07:27:53.287Z"}
+{"body":{"name":"Test Stone"},"level":"warn","message":"Missing required fields","timestamp":"2025-05-08T07:27:53.289Z"}
