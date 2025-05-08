@@ -6,6 +6,7 @@ import pytest
 from unittest.mock import patch
 import numpy as np
 from app.utils import predict_top3
+from unittest.mock import patch, MagicMock
 
 app = create_app()
 client = app.test_client()
@@ -65,3 +66,20 @@ def test_predict_top3_real():
         assert "stone" in r
         assert "probability" in r
         assert isinstance(r["probability"], float)
+
+def test_predict_top3_with_mocked_model():
+    fake_pred = np.zeros(203)
+    fake_pred[55] = 0.9
+    fake_pred[77] = 0.08
+    fake_pred[88] = 0.02
+
+    with patch("app.utils.model") as mock_model:
+        mock_model.predict = MagicMock(return_value=[fake_pred])
+
+        img_path = TEST_IMAGE_PATH 
+        result = predict_top3(img_path)
+
+        assert isinstance(result, list)
+        assert len(result) == 3
+        assert result[0]["probability"] > 0.8
+        assert "stone" in result[0]
