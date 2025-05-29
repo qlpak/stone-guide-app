@@ -168,7 +168,7 @@ router.get("/:id", getStoneById);
  *       403:
  *         description: Forbidden (not admin)
  */
-router.post("/add-stone", checkJwt, authorizeRole("admin"), createStone);
+router.post("/", checkJwt, authorizeRole("admin"), createStone);
 
 /**
  * @swagger
