@@ -10,11 +10,20 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const logger = require("./config/logger");
 const errorHandler = require("./middlewares/errorMiddleware");
+const cors = require("cors");
 dotenv.config();
 
 const app = express();
 
+app.use(
+  cors({
+    origin: "http://localhost:3000", // frontend origin
+    credentials: true,
+  })
+);
+
 app.use(express.json());
+
 app.use(helmet());
 app.use(morgan("dev"));
 

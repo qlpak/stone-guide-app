@@ -251,13 +251,14 @@ describe("Stone API", () => {
     expect(res.body.stones[0].name).toMatch(/Taj Mahal/i);
   });
 
-  test("should return 404 when no stones match the search", async () => {
+  test("should return 200 and empty array when no stones match the search", async () => {
     const res = await request(app).get(
       "/api/stones/search?query=NonExistentStone"
     );
 
-    expect(res.statusCode).toBe(404);
-    expect(res.body.error).toBe("No stones found");
+    expect(res.statusCode).toBe(200);
+    expect(res.body.stones).toBeInstanceOf(Array);
+    expect(res.body.stones.length).toBe(0);
   });
 
   test("should return recommended stones based on type and color", async () => {
