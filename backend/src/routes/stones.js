@@ -11,13 +11,27 @@ const {
 const checkJwt = require("../middlewares/auth");
 const authorizeRole = require("../middlewares/authorizeRole");
 
+const router = express.Router();
+
 /**
  * @swagger
  * tags:
  *   name: Stones
  *   description: Endpoints related to stone data
  */
-const router = express.Router();
+
+/**
+ * @swagger
+ * /api/stones:
+ *   get:
+ *     summary: Get all stones
+ *     description: Returns a list of all stones in the database
+ *     tags: [Stones]
+ *     responses:
+ *       200:
+ *         description: List of stones
+ */
+router.get("/", getStones);
 
 /**
  * @swagger
@@ -25,19 +39,41 @@ const router = express.Router();
  *   get:
  *     summary: Search for stones
  *     description: Returns a list of stones matching search criteria
+ *     tags: [Stones]
  *     parameters:
  *       - in: query
  *         name: query
  *         schema:
  *           type: string
- *         required: true
- *         description: Search query
+ *         required: false
+ *         description: Search query (name)
+ *       - in: query
+ *         name: usage
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Usage filter (comma-separated)
  *     responses:
  *       200:
  *         description: List of matching stones
  */
 router.get("/search", searchStones);
 
+/**
+ * @swagger
+ * /api/stones/recommend:
+ *   get:
+ *     summary: Filter stone recommendations
+ *     description: Returns filtered recommendations based on query. Requires JWT.
+ *     tags: [Stones]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Filtered stones
+ *       401:
+ *         description: Unauthorized
+ */
 router.get("/recommend", checkJwt, filterRecommendations);
 
 /**
@@ -46,6 +82,7 @@ router.get("/recommend", checkJwt, filterRecommendations);
  *   get:
  *     summary: Get recommended stones
  *     description: Returns a list of recommended stones based on the given stone ID
+ *     tags: [Stones]
  *     parameters:
  *       - in: path
  *         name: id
@@ -64,7 +101,8 @@ router.get("/recommendations/:id", getRecommendedStones);
  * /api/stones/{id}:
  *   get:
  *     summary: Get stone details
- *     description: Returns details of a stone based on its ID
+ *     description: Returns details of a stone by ID
+ *     tags: [Stones]
  *     parameters:
  *       - in: path
  *         name: id
@@ -75,143 +113,14 @@ router.get("/recommendations/:id", getRecommendedStones);
  *     responses:
  *       200:
  *         description: Stone details
+ *       404:
+ *         description: Stone not found
  */
 router.get("/:id", getStoneById);
 
 /**
  * @swagger
- * /api/stones:
- *   get:
- *     summary: Get all stones
- *     description: Returns a list of all stones in the database
- *     responses:
- *       200:
- *         description: List of stones
- */
-router.get("/", getStones);
-
-// /**
-//  * @swagger
-//  * /api/stones:
-//  *   post:
-//  *     summary: Add a new stone
-//  *     description: Creates a new stone entry in the database
-//  *     requestBody:
-//  *       required: true
-//  *       content:
-//  *         application/json:
-//  *           schema:
-//  *             type: object
-//  *             properties:
-//  *               name:
-//  *                 type: string
-//  *                 example: "Taj Mahal Quartzite"
-//  *               type:
-//  *                 type: string
-//  *                 example: "Quartzite"
-//  *               price_per_m2:
-//  *                 type: number
-//  *                 example: 150
-//  *     responses:
-//  *       201:
-//  *         description: Stone successfully added
-//  */
-router.post("/", createStone);
-
-/**
- * @swagger
- * /api/stones:
- *   get:
- *     summary: Get all stones
- *     description: Returns a list of all stones in the database. Requires authentication.
- *     tags: [Stones]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: List of stones
- *       401:
- *         description: Unauthorized
- */
-router.get("/", checkJwt, getStones);
-
-/**
- * @swagger
- * /api/stones/{id}:
- *   get:
- *     summary: Get stone details
- *     description: Returns details of a stone by ID. Requires authentication.
- *     tags: [Stones]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: Stone ID
- *     responses:
- *       200:
- *         description: Stone found
- *       401:
- *         description: Unauthorized
- *       404:
- *         description: Stone not found
- */
-router.get("/:id", checkJwt, getStoneById);
-
-/**
- * @swagger
- * /api/stones/search:
- *   get:
- *     summary: Search stones
- *     description: Search for stones matching query parameters. Requires authentication.
- *     tags: [Stones]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: query
- *         name: query
- *         schema:
- *           type: string
- *         required: true
- *         description: Search keyword
- *     responses:
- *       200:
- *         description: Matching stones
- *       401:
- *         description: Unauthorized
- */
-// router.get("/search", checkJwt, searchStones);
-
-/**
- * @swagger
- * /api/stones/recommendations/{id}:
- *   get:
- *     summary: Get stone recommendations
- *     description: Returns stones similar to the specified one. Requires authentication.
- *     tags: [Stones]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID of the base stone
- *     responses:
- *       200:
- *         description: Recommended stones
- *       401:
- *         description: Unauthorized
- */
-router.get("/recommendations/:id", checkJwt, getRecommendedStones);
-
-/**
- * @swagger
- * /api/stones:
+ * /api/stones/add-stone:
  *   post:
  *     summary: Create a new stone (admin only)
  *     description: Adds a new stone to the database. Requires admin role.
@@ -227,40 +136,66 @@ router.get("/recommendations/:id", checkJwt, getRecommendedStones);
  *             required:
  *               - name
  *               - type
- *               - pricePerM2_2cm
+ *               - color
+ *               - usage
+ *               - location
  *             properties:
  *               name:
  *                 type: string
- *                 example: "Taj Mahal Quartzite"
  *               type:
  *                 type: string
- *                 example: "Quartzite"
  *               color:
  *                 type: string
- *                 example: "White-Gold"
  *               pricePerM2_2cm:
  *                 type: number
- *                 example: 150
+ *               pricePerM2_3cm:
+ *                 type: number
  *               usage:
  *                 type: array
  *                 items:
  *                   type: string
- *                 example: ["kitchen", "bathroom"]
  *               location:
- *                 type: string
- *                 example: "Showroom A, Shelf 3"
+ *                 type: array
+ *                 items:
+ *                   type: string
  *     responses:
  *       201:
  *         description: Stone successfully created
  *       400:
- *         description: Invalid input data
+ *         description: Missing or invalid data
  *       401:
- *         description: Unauthorized (no token)
+ *         description: Unauthorized
  *       403:
- *         description: Forbidden (user lacks admin role)
+ *         description: Forbidden (not admin)
  */
 router.post("/add-stone", checkJwt, authorizeRole("admin"), createStone);
 
+/**
+ * @swagger
+ * /api/stones/compare:
+ *   post:
+ *     summary: Compare stones
+ *     description: Compares multiple stones. Requires authentication.
+ *     tags: [Stones]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               stoneIds:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: Comparison result
+ *       401:
+ *         description: Unauthorized
+ */
 router.post("/compare", checkJwt, compareStones);
 
 module.exports = router;
