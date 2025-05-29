@@ -23,12 +23,12 @@ def setup_upload_example():
             f.write(os.urandom(1024))  # fake image content
 
 def test_get_root():
-    response: Response = client.get("/ai-stone-recognition/")
+    response: Response = client.get("/ai/")
     assert response.status_code == 200
     assert "AI module is running" in response.get_data(as_text=True)
 
 def test_post_without_file():
-    response: Response = client.post("/ai-stone-recognition/")
+    response: Response = client.post("/ai/")
     assert response.status_code == 400
     assert response.get_json()["error"] == "No image uploaded"
 
@@ -43,7 +43,7 @@ def test_post_with_file():
         with open(TEST_IMAGE_PATH, "rb") as f:
             data = {"image": (io.BytesIO(f.read()), "example.jpg")}
             response: Response = client.post(
-                "/ai-stone-recognition/",
+                "/ai/",
                 content_type="multipart/form-data",
                 data=data
             )

@@ -28,10 +28,18 @@ const createStoneService = async (stoneData) => {
 
 const searchStonesService = async (query, usage) => {
   const filter = {};
-  if (query) filter.name = { $regex: query, $options: "i" };
+
+  if (query) {
+    const searchTerms = query.trim().split(/\s+/); // split by space, remove extra spaces
+    filter.$and = searchTerms.map((term) => ({
+      name: { $regex: term, $options: "i" },
+    }));
+  }
+
   if (usage && typeof usage === "string") {
     filter.usage = { $in: usage.split(",") };
   }
+
   return Stone.find(filter);
 };
 

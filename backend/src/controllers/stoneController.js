@@ -6,6 +6,7 @@ const {
   searchStonesService,
   getRecommendedStonesService,
 } = require("../services/stoneService");
+const Stone = require("../models/Stone");
 
 const getStones = async (req, res) => {
   try {
@@ -66,25 +67,29 @@ const createStone = async (req, res) => {
 
 const searchStones = async (req, res) => {
   try {
-    const { query, usage } = req.query;
+    let { query, usage } = req.query;
+
+    // Normalize & sanitize input
+    query = query?.trim();
+    usage = usage?.trim();
+
     if (!query && !usage) {
       logger.warn("Missing search parameters", { query: req.query });
       return res.status(400).json({ error: "Missing search parameters" });
     }
 
     const stones = await searchStonesService(query, usage);
-    if (!stones.length) {
-      logger.warn("No stones found for search query", { query: req.query });
-      return res.status(404).json({ error: "No stones found" });
-    }
-    logger.info("Stone search successful", {
-      query: req.query,
+
+    logger.info("Stone search completed", {
+      query: { query, usage },
       results: stones.length,
     });
-    res.json({ stones });
+
+    // Return empty list instead of 404
+    return res.status(200).json({ stones });
   } catch (error) {
     logger.error("Error searching stones", { error });
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 };
 
@@ -106,10 +111,60 @@ const getRecommendedStones = async (req, res) => {
   }
 };
 
+const filterRecommendations = async (req, res) => {
+  try {
+    const { color, usage, min, max } = req.query;
+
+    const query = {};
+
+    if (color) query.color = color;
+    if (usage) query.usage = { $in: usage.split(",") };
+    if (min || max) {
+      query.pricePerM2_2cm = {};
+      if (min) query.pricePerM2_2cm.$gte = parseFloat(min);
+      if (max) query.pricePerM2_2cm.$lte = parseFloat(max);
+    }
+
+    const stones = await Stone.find(query).select(
+      "name type pricePerM2_2cm pricePerM2_3cm location usage"
+    );
+
+    res.json(stones);
+  } catch (err) {
+    console.error("Recommendation filter error:", err);
+    res.status(500).json({ error: "Failed to fetch recommendations" });
+  }
+};
+
+const compareStones = async (req, res) => {
+  try {
+    const { ids } = req.body; // expecting array of 3 stone IDs
+
+    if (!Array.isArray(ids) || ids.length !== 3) {
+      return res
+        .status(400)
+        .json({ error: "Please provide exactly 3 stone IDs." });
+    }
+
+    const stones = await Stone.find({ _id: { $in: ids } });
+
+    if (stones.length !== 3) {
+      return res.status(404).json({ error: "One or more stones not found." });
+    }
+
+    res.status(200).json(stones);
+  } catch (err) {
+    console.error("Error comparing stones:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 module.exports = {
   getStones,
   getStoneById,
   createStone,
   searchStones,
   getRecommendedStones,
+  filterRecommendations,
+  compareStones,
 };
