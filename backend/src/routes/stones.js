@@ -5,6 +5,8 @@ const {
   createStone,
   searchStones,
   getRecommendedStones,
+  filterRecommendations,
+  compareStones,
 } = require("../controllers/stoneController");
 const checkJwt = require("../middlewares/auth");
 const authorizeRole = require("../middlewares/authorizeRole");
@@ -35,6 +37,8 @@ const router = express.Router();
  *         description: List of matching stones
  */
 router.get("/search", searchStones);
+
+router.get("/recommend", checkJwt, filterRecommendations);
 
 /**
  * @swagger
@@ -179,7 +183,7 @@ router.get("/:id", checkJwt, getStoneById);
  *       401:
  *         description: Unauthorized
  */
-router.get("/search", checkJwt, searchStones);
+// router.get("/search", checkJwt, searchStones);
 
 /**
  * @swagger
@@ -255,6 +259,8 @@ router.get("/recommendations/:id", checkJwt, getRecommendedStones);
  *       403:
  *         description: Forbidden (user lacks admin role)
  */
-router.post("/", checkJwt, authorizeRole("admin"), createStone);
+router.post("/add-stone", checkJwt, authorizeRole("admin"), createStone);
+
+router.post("/compare", checkJwt, compareStones);
 
 module.exports = router;
