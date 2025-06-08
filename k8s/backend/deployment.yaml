@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stone-backend
+  labels:
+    app: stone-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: stone-backend
+  template:
+    metadata:
+      labels:
+        app: stone-backend
+    spec:
+      hostAliases:
+        - ip: "10.1.1.194" # IP Keycloaka
+          hostnames:
+            - "auth.stoneguide.local"
+      containers:
+        - name: stone-backend
+          image: qlpak/stone-guide-backend:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5001
+          env:
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: stone-secrets
+                  key: MONGO_URI
+            - name: REDIS_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: stone-secrets
+                  key: REDIS_HOST
+            - name: REDIS_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: stone-secrets
+                  key: REDIS_PORT
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5001
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5001
+            initialDelaySeconds: 30
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: "75m"
+              memory: "96Mi"
+            limits:
+              cpu: "125m"
+              memory: "192Mi"

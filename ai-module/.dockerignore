@@ -1,0 +1,8 @@
+__pycache__/
+.pytest_cache/
+static/
+*.tflite
+*.pt
+*.csv
+venv/
+htmlcov/

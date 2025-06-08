@@ -13,7 +13,6 @@ export default function CallbackPage() {
 body.append('client_id', process.env.NEXT_PUBLIC_KEYCLOAK_CLIENT_ID!)
 body.append('code', code)
 body.append('redirect_uri', `${process.env.NEXT_PUBLIC_REDIRECT_URI}/callback`)
-body.append('code_verifier', sessionStorage.getItem('pkce_verifier') || '')
 
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_KEYCLOAK_BASE_URL}/realms/${process.env.NEXT_PUBLIC_KEYCLOAK_REALM}/protocol/openid-connect/token`, {

@@ -109,3 +109,4 @@ def test_predict_top3_forces_model_load():
         result = utils.predict_top3(img_path)
 
     assert result[0]["stone"]
+        

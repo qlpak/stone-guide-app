@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-process.env.MONGO_URI = "mongodb://mongodb:27017/stone-guide-app";
+process.env.MONGO_URI = "mongodb://mongodb:27017/stoneguide";
 const connectDB = require("../src/config/database");
 
 jest.mock("mongoose", () => ({
@@ -25,15 +25,15 @@ describe("Database Connection", () => {
 
   test("should connect to MongoDB successfully", async () => {
     process.env.NODE_ENV = "development";
-    process.env.MONGO_URI = "mongodb://mongodb:27017/stone-guide-app";
+    process.env.MONGO_URI = "mongodb://mongodb:27017/stoneguide";
 
     mongoose.connect.mockResolvedValueOnce();
 
     await connectDB();
 
     expect(mongoose.connect).toHaveBeenCalledWith(
-      "mongodb://mongodb:27017/stone-guide-app",
-      { dbName: "stone-guide-app" }
+      "mongodb://mongodb:27017/stoneguide",
+      { dbName: "stoneguide" }
     );
   });
 
@@ -47,7 +47,7 @@ describe("Database Connection", () => {
 
   test("should handle database connection error", async () => {
     process.env.NODE_ENV = "development";
-    process.env.MONGO_URI = "mongodb://mongodb:27017/stone-guide-app";
+    process.env.MONGO_URI = "mongodb://mongodb:27017/stoneguide";
 
     mongoose.connect.mockRejectedValueOnce(new Error("Connection failed"));
 

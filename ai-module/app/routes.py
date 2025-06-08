@@ -3,7 +3,7 @@ from .utils import predict_top3, save_image
 
 ai_routes = Blueprint("ai_routes", __name__)
 
-@ai_routes.route("/", methods=["GET", "POST"])
+@ai_routes.route("/", methods=["GET", "POST"], strict_slashes=False)
 def predict():
     if request.method == "GET":
         return "AI module is running", 200

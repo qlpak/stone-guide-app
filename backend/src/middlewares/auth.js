@@ -7,10 +7,11 @@ const checkJwt = jwt({
     rateLimit: true,
     jwksRequestsPerMinute: 5,
     jwksUri:
-      "http://stone-keycloak:8080/realms/stone-guide/protocol/openid-connect/certs",
+      "http://auth.stoneguide.local:8080/realms/stone-guide/protocol/openid-connect/certs",
   }),
   audience: "stone-backend",
-  issuer: "http://localhost:8080/realms/stone-guide",
+  issuer: "http://auth.stoneguide.local/realms/stone-guide",
+
   algorithms: ["RS256"],
 });
 

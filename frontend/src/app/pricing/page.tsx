@@ -48,7 +48,7 @@ export default function PricingPage() {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/stones/search?query=${debouncedQuery}`,
           {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: { Authorization: `Bearer ${token}`, 'Cache-Control': 'no-cache' },
           }
         )
 
@@ -87,7 +87,9 @@ export default function PricingPage() {
     }
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/pricing`, {
+      console.log("SUBMIT TO:", "http://stoneguide.local/api/pricing");
+
+      const res = await fetch(`http://stoneguide.local/api/pricing`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
