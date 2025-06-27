@@ -1,12 +1,6 @@
-name: Backend + AI Tests
+name: Backend + Frontend + AI Tests
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
   workflow_dispatch: {}
 
 jobs:
