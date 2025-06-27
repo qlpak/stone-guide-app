@@ -23,12 +23,18 @@ body.append('redirect_uri', `${process.env.NEXT_PUBLIC_REDIRECT_URI}/callback`)
         body,
       })
 
-      const data = await response.json()
+      console.log('Received code:', code)
+
+const data = await response.json()
+console.log('Token response:', data)
+
 
       if (data.access_token) {
         localStorage.setItem('token', data.access_token)
         localStorage.setItem('token_type', data.token_type)
         localStorage.setItem('expires_at', (Date.now() + Number(data.expires_in) * 1000).toString())
+        console.log('✅ Token saved to localStorage!')
+console.log('Saved token:', data.access_token)
         window.location.href = '/dashboard'
       } else {
         console.error('Token exchange failed:', data)

@@ -18,6 +18,15 @@ spec:
                 name: stone-backend
                 port:
                   number: 5001
+
+          - path: /api-docs
+            pathType: Prefix
+            backend:
+              service:
+                name: stone-backend
+                port:
+                  number: 5001
+
           - path: /ai/predict(/|$)(.*)
             pathType: ImplementationSpecific
             backend:

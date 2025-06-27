@@ -65,7 +65,7 @@ export default function AddStonePage() {
 
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/stones/add-stone`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/stones`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

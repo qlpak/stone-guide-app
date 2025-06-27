@@ -14,13 +14,13 @@ spec:
       labels:
         app: mongo
     spec:
-      initContainers:
-        - name: mongo-init-cleanup
-          image: busybox
-          command: ["sh", "-c", "rm -f /data/db/mongod.lock"]
-          volumeMounts:
-            - name: mongo-persistent-storage
-              mountPath: /data/db
+      # initContainers:
+      #   - name: mongo-init-cleanup
+      #     image: busybox
+      #     command: ["sh", "-c", "rm -f /data/db/mongod.lock"]
+      #     volumeMounts:
+      #       - name: mongo-persistent-storage
+      #         mountPath: /data/db
       containers:
         - name: mongo
           image: mongo:latest

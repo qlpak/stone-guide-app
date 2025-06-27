@@ -16,11 +16,10 @@ spec:
         - name: keycloak
           image: stone-keycloak:with-realm
           imagePullPolicy: IfNotPresent
-          command:
-            [
+          command: [
               "/opt/keycloak/bin/kc.sh",
               "start-dev",
-              "--import-realm",
+              # "--import-realm",
               "--http-port=8080",
             ]
           env:

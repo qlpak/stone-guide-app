@@ -15,7 +15,7 @@ spec:
         app: stone-backend
     spec:
       hostAliases:
-        - ip: "10.1.1.194" # IP Keycloaka
+        - ip: "10.1.2.141"
           hostnames:
             - "auth.stoneguide.local"
       containers:
