@@ -86,6 +86,8 @@ services:
     restart: always
     ports:
       - "5002:5002"
+    volumes:
+      - ./ai-module:/app
     networks:
       - stone-network
     healthcheck:

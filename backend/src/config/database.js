@@ -1,5 +1,12 @@
 const mongoose = require("mongoose");
 
+const getSecret = (name) => {
+  const path = `/run/secrets/${name}`;
+  return fs.existsSync(path) ? fs.readFileSync(path, "utf-8").trim() : null;
+};
+
+const mongoUri = getSecret("mongo_uri") || process.env.MONGO_URI;
+
 const connectDB = async () => {
   if (process.env.NODE_ENV === "test") return;
   try {
