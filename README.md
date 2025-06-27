@@ -1,5 +1,13 @@
 # 🪨 StoneGuide
 
+![Full Stack](https://img.shields.io/badge/Full--Stack-Application-success?logo=vercel)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-Production--Ready-blue?logo=kubernetes)
+![AI-Powered](https://img.shields.io/badge/AI-Powered-brightgreen?logo=python)
+![Security](https://img.shields.io/badge/OAuth%202.0-Security-purple?logo=keycloak)
+![Use Case](https://img.shields.io/badge/Use--Case-Academic%20%2B%20Industry-yellowgreen)
+![Built by](https://img.shields.io/badge/Built%20by-%40qlpak-blueviolet?logo=github)
+
+
 **StoneGuide** is a full-stack, AI-powered web application for exploring, comparing, recommending, and pricing natural stones used in kitchens, bathrooms, stairs, and more. The platform is secure, production-ready, and built using modern DevOps practices.
 
 > **Status**: ✅ Production-ready · ✅ Full frontend/backend complete · ✅ AI module integrated · ✅ Deployed on Kubernetes
