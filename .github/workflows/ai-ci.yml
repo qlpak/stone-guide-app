@@ -1,0 +1,68 @@
+name: AI Module CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "ai-module/**"
+      - ".github/workflows/ai-ci.yml"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "ai-module/**"
+      - ".github/workflows/ai-ci.yml"
+  workflow_dispatch: {}
+
+jobs:
+  test:
+    name: AI Module Tests & Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+          cache-dependency-path: ai-module/requirements.txt
+
+      - name: Install dependencies
+        working-directory: ai-module
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+
+      - name: Run tests with coverage
+        working-directory: ai-module
+        run: |
+          rm -f .coverage
+          rm -rf htmlcov
+          PYTHONPATH=. pytest --cov=app --cov-report=term-missing --cov-report=html tests/
+
+      - name: Verify 100% coverage
+        working-directory: ai-module
+        run: |
+          TOTAL_COVERAGE=$(PYTHONPATH=. pytest --cov=app --cov-report=term tests/ 2>&1 | grep "TOTAL" | awk '{print $4}' | sed 's/%//')
+
+          echo "AI Module Coverage: $TOTAL_COVERAGE%"
+
+          if (( $(echo "$TOTAL_COVERAGE < 100" | bc -l) )); then
+            echo "AI module coverage is below 100%! Failing pipeline."
+            exit 1
+          else
+            echo "AI module coverage is 100%"
+          fi
+
+      - name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ai-coverage
+          path: ai-module/htmlcov/
+          retention-days: 7

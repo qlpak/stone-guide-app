@@ -1,0 +1,467 @@
+---
+# Stone Guide Application - Kubernetes Deployment Playbook
+# Usage: ansible-playbook deploy.yaml
+# Quick deploy: ansible-playbook deploy.yaml --tags quick
+# Rollback: ansible-playbook deploy.yaml --tags rollback
+
+- name: Deploy Stone Guide Application to Kubernetes
+  hosts: localhost
+  connection: local
+  gather_facts: yes
+
+  vars:
+    namespace: "stone-guide"
+    app_domain: "stoneguide.local"
+
+    # Docker images (update versions as needed)
+    backend_image: "your-registry/stone-guide-backend:latest"
+    frontend_image: "your-registry/stone-guide-frontend:latest"
+    ai_module_image: "your-registry/stone-guide-ai:latest"
+
+    # MongoDB configuration
+    mongo_uri: "mongodb://mongo:27017/stoneguide"
+
+    # Redis configuration
+    redis_host: "redis"
+    redis_port: "6379"
+
+    # Keycloak configuration
+    keycloak_base_url: "http://stoneguide.local/auth"
+    keycloak_realm: "stone-guide"
+    keycloak_client_id: "stone-guide-app"
+
+    # Application URLs
+    backend_url: "http://stoneguide.local/api"
+    ai_api_url: "http://stoneguide.local/ai/predict"
+    redirect_uri: "http://stoneguide.local"
+
+    # Deployment timeout (seconds)
+    pod_wait_timeout: 300
+
+  tasks:
+    # ============================================================
+    # Pre-deployment Checks
+    # ============================================================
+
+    - name: "Check if kubectl is installed"
+      command: kubectl version --client
+      register: kubectl_check
+      changed_when: false
+      failed_when: false
+      tags: always
+
+    - name: "Fail if kubectl is not installed"
+      fail:
+        msg: "kubectl is not installed. Please install it first."
+      when: kubectl_check.rc != 0
+      tags: always
+
+    - name: "Check kubectl cluster connection"
+      command: kubectl cluster-info
+      register: cluster_check
+      changed_when: false
+      failed_when: false
+      tags: always
+
+    - name: "Fail if cluster is not accessible"
+      fail:
+        msg: "Cannot connect to Kubernetes cluster. Check your kubeconfig."
+      when: cluster_check.rc != 0
+      tags: always
+
+    - name: "Kubernetes cluster is accessible"
+      debug:
+        msg: "Connected to Kubernetes cluster successfully!"
+      tags: always
+
+    # ============================================================
+    # Namespace Setup
+    # ============================================================
+
+    - name: "Create namespace {{ namespace }}"
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Namespace
+          metadata:
+            name: "{{ namespace }}"
+      tags: always
+
+    # ============================================================
+    # Secrets Configuration
+    # ============================================================
+
+    - name: "Create application secrets"
+      kubernetes.core.k8s:
+        state: present
+        namespace: "{{ namespace }}"
+        definition:
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: stone-secrets
+          type: Opaque
+          stringData:
+            MONGO_URI: "{{ mongo_uri }}"
+            REDIS_HOST: "{{ redis_host }}"
+            REDIS_PORT: "{{ redis_port }}"
+      tags: always
+
+    - name: "Create frontend secrets"
+      kubernetes.core.k8s:
+        state: present
+        namespace: "{{ namespace }}"
+        definition:
+          apiVersion: v1
+          kind: Secret
+          metadata:
+            name: frontend-secrets
+          type: Opaque
+          stringData:
+            NEXT_PUBLIC_KEYCLOAK_BASE_URL: "{{ keycloak_base_url }}"
+            NEXT_PUBLIC_KEYCLOAK_REALM: "{{ keycloak_realm }}"
+            NEXT_PUBLIC_KEYCLOAK_CLIENT_ID: "{{ keycloak_client_id }}"
+            NEXT_PUBLIC_REDIRECT_URI: "{{ redirect_uri }}"
+            NEXT_PUBLIC_BACKEND_URL: "{{ backend_url }}"
+            NEXT_PUBLIC_AI_API_URL: "{{ ai_api_url }}"
+      tags: always
+
+    # ============================================================
+    # STEP 1: Deploy MongoDB (Database)
+    # ============================================================
+
+    - name: "Step 1/7: Deploy MongoDB"
+      debug:
+        msg: "Deploying MongoDB database..."
+      tags: [deploy, quick]
+
+    - name: "Apply MongoDB manifests"
+      kubernetes.core.k8s:
+        state: present
+        namespace: "{{ namespace }}"
+        src: "{{ item }}"
+      loop:
+        - "k8s/mongo/pvc.yaml"
+        - "k8s/mongo/deployment.yaml"
+        - "k8s/mongo/service.yaml"
+      tags: [deploy, quick]
+
+    - name: "Wait for MongoDB to be ready"
+      kubernetes.core.k8s_info:
+        kind: Pod
+        namespace: "{{ namespace }}"
+        label_selectors:
+          - app=mongodb
+        wait: yes
+        wait_condition:
+          type: Ready
+          status: "True"
+        wait_timeout: "{{ pod_wait_timeout }}"
+      tags: [deploy, quick]
+
+    - name: "MongoDB is ready"
+      debug:
+        msg: "MongoDB deployment completed"
+      tags: [deploy, quick]
+
+    # ============================================================
+    # STEP 2: Deploy Redis (Cache)
+    # ============================================================
+
+    - name: "Step 2/7: Deploy Redis"
+      debug:
+        msg: "Deploying Redis cache..."
+      tags: [deploy, quick]
+
+    - name: "Apply Redis manifests"
+      kubernetes.core.k8s:
+        state: present
+        namespace: "{{ namespace }}"
+        src: "{{ item }}"
+      loop:
+        - "k8s/redis/deployment.yaml"
+        - "k8s/redis/service.yaml"
+      tags: [deploy, quick]
+
+    - name: "Wait for Redis to be ready"
+      kubernetes.core.k8s_info:
+        kind: Pod
+        namespace: "{{ namespace }}"
+        label_selectors:
+          - app=redis
+        wait: yes
+        wait_condition:
+          type: Ready
+          status: "True"
+        wait_timeout: "{{ pod_wait_timeout }}"
+      tags: [deploy, quick]
+
+    - name: "Redis is ready"
+      debug:
+        msg: "Redis deployment completed"
+      tags: [deploy, quick]
+
+    # ============================================================
+    # STEP 3: Deploy Keycloak (Authentication)
+    # ============================================================
+
+    - name: "Step 3/7: Deploy Keycloak"
+      debug:
+        msg: "Deploying Keycloak authentication service (this may take 5-10 minutes)..."
+      tags: [deploy, quick]
+
+    - name: "Apply Keycloak manifests"
+      kubernetes.core.k8s:
+        state: present
+        namespace: "{{ namespace }}"
+        src: "{{ item }}"
+      loop:
+        - "k8s/keycloak/keycloak-pvc.yaml"
+        - "k8s/keycloak/deployment.yaml"
+        - "k8s/keycloak/service.yaml"
+      tags: [deploy, quick]
+
+    - name: "Wait for Keycloak to be ready (this takes time...)"
+      kubernetes.core.k8s_info:
+        kind: Pod
+        namespace: "{{ namespace }}"
+        label_selectors:
+          - app=keycloak
+        wait: yes
+        wait_condition:
+          type: Ready
+          status: "True"
+        wait_timeout: 600
+      tags: [deploy, quick]
+
+    - name: "Keycloak is ready"
+      debug:
+        msg: "Keycloak deployment completed"
+      tags: [deploy, quick]
+
+    # ============================================================
+    # STEP 4: Deploy Backend (API Server)
+    # ============================================================
+
+    - name: "Step 4/7: Deploy Backend API"
+      debug:
+        msg: "Deploying Backend API server..."
+      tags: [deploy, quick]
+
+    - name: "Apply Backend manifests"
+      kubernetes.core.k8s:
+        state: present
+        namespace: "{{ namespace }}"
+        src: "{{ item }}"
+      loop:
+        - "k8s/backend/deployment.yaml"
+        - "k8s/backend/service.yaml"
+        - "k8s/backend/hpa-backend.yaml"
+      tags: [deploy, quick]
+
+    - name: "Wait for Backend to be ready"
+      kubernetes.core.k8s_info:
+        kind: Pod
+        namespace: "{{ namespace }}"
+        label_selectors:
+          - app=stone-backend
+        wait: yes
+        wait_condition:
+          type: Ready
+          status: "True"
+        wait_timeout: "{{ pod_wait_timeout }}"
+      tags: [deploy, quick]
+
+    - name: "Backend is ready"
+      debug:
+        msg: "Backend API deployment completed"
+      tags: [deploy, quick]
+
+    # ============================================================
+    # STEP 5: Deploy AI Module (ML Service)
+    # ============================================================
+
+    - name: "Step 5/7: Deploy AI Module"
+      debug:
+        msg: "Deploying AI/ML service..."
+      tags: [deploy, quick]
+
+    - name: "Apply AI Module manifests"
+      kubernetes.core.k8s:
+        state: present
+        namespace: "{{ namespace }}"
+        src: "{{ item }}"
+      loop:
+        - "k8s/ai-module/deployment.yaml"
+        - "k8s/ai-module/service.yaml"
+      tags: [deploy, quick]
+
+    - name: "Wait for AI Module to be ready"
+      kubernetes.core.k8s_info:
+        kind: Pod
+        namespace: "{{ namespace }}"
+        label_selectors:
+          - app=ai-module
+        wait: yes
+        wait_condition:
+          type: Ready
+          status: "True"
+        wait_timeout: "{{ pod_wait_timeout }}"
+      tags: [deploy, quick]
+
+    - name: "AI Module is ready"
+      debug:
+        msg: "AI Module deployment completed"
+      tags: [deploy, quick]
+
+    # ============================================================
+    # STEP 6: Deploy Frontend (Web UI)
+    # ============================================================
+
+    - name: "Step 6/7: Deploy Frontend"
+      debug:
+        msg: "Deploying Frontend web application..."
+      tags: [deploy, quick]
+
+    - name: "Apply Frontend manifests"
+      kubernetes.core.k8s:
+        state: present
+        namespace: "{{ namespace }}"
+        src: "{{ item }}"
+      loop:
+        - "k8s/frontend/deployment.yaml"
+        - "k8s/frontend/service.yaml"
+      tags: [deploy, quick]
+
+    - name: "Wait for Frontend to be ready"
+      kubernetes.core.k8s_info:
+        kind: Pod
+        namespace: "{{ namespace }}"
+        label_selectors:
+          - app=stone-frontend
+        wait: yes
+        wait_condition:
+          type: Ready
+          status: "True"
+        wait_timeout: "{{ pod_wait_timeout }}"
+      tags: [deploy, quick]
+
+    - name: "Frontend is ready"
+      debug:
+        msg: "Frontend deployment completed"
+      tags: [deploy, quick]
+
+    # ============================================================
+    # STEP 7: Deploy Ingress (Routing)
+    # ============================================================
+
+    - name: "Step 7/7: Deploy Ingress"
+      debug:
+        msg: "Configuring Ingress routing..."
+      tags: [deploy, quick]
+
+    - name: "Apply Ingress manifest"
+      kubernetes.core.k8s:
+        state: present
+        namespace: "{{ namespace }}"
+        src: "k8s/ingress.yaml"
+      tags: [deploy, quick]
+
+    - name: "Ingress configured"
+      debug:
+        msg: "Ingress deployment completed"
+      tags: [deploy, quick]
+
+    # ============================================================
+    # Post-Deployment Verification
+    # ============================================================
+
+    - name: "Get deployment status"
+      command: kubectl get pods -n {{ namespace }}
+      register: pod_status
+      changed_when: false
+      tags: always
+
+    - name: "Get services status"
+      command: kubectl get services -n {{ namespace }}
+      register: svc_status
+      changed_when: false
+      tags: always
+
+    - name: "Get ingress status"
+      command: kubectl get ingress -n {{ namespace }}
+      register: ingress_status
+      changed_when: false
+      tags: always
+
+    - name: "Display deployment summary"
+      debug:
+        msg: |
+
+          ════════════════════════════════════════════════════════════════
+           DEPLOYMENT COMPLETED SUCCESSFULLY!
+          ════════════════════════════════════════════════════════════════
+
+          Pods Status:
+          {{ pod_status.stdout }}
+
+          Services Status:
+          {{ svc_status.stdout }}
+
+          Ingress Status:
+          {{ ingress_status.stdout }}
+
+          ════════════════════════════════════════════════════════════════
+          ACCESS YOUR APPLICATION:
+          ════════════════════════════════════════════════════════════════
+
+          Frontend:     http://{{ app_domain }}
+          Backend API:  http://{{ app_domain }}/api
+          AI Module:    http://{{ app_domain }}/ai/predict
+          API Docs:     http://{{ app_domain }}/api-docs
+          Keycloak:     http://{{ app_domain }}/auth
+
+          ════════════════════════════════════════════════════════════════
+          IMPORTANT: Add this to /etc/hosts
+          ════════════════════════════════════════════════════════════════
+
+          Get your cluster IP:
+            kubectl get nodes -o wide
+
+          Then add to /etc/hosts:
+            sudo nano /etc/hosts
+            <CLUSTER_IP> {{ app_domain }}
+
+          ════════════════════════════════════════════════════════════════
+      tags: always
+
+# ============================================================
+# Rollback Tasks
+# ============================================================
+
+- name: Rollback Deployment
+  hosts: localhost
+  connection: local
+  gather_facts: no
+  tags: [rollback, never]
+
+  vars:
+    namespace: "stone-guide"
+
+  tasks:
+    - name: "Rolling back Backend"
+      command: kubectl rollout undo deployment/stone-backend -n {{ namespace }}
+      ignore_errors: yes
+
+    - name: "Rolling back Frontend"
+      command: kubectl rollout undo deployment/stone-frontend -n {{ namespace }}
+      ignore_errors: yes
+
+    - name: "Rolling back AI Module"
+      command: kubectl rollout undo deployment/ai-module -n {{ namespace }}
+      ignore_errors: yes
+
+    - name: "Rollback completed"
+      debug:
+        msg: "Rollback to previous version completed"

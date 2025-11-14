@@ -33,10 +33,10 @@ describe("Database Connection", () => {
 
     expect(mongoose.connect).toHaveBeenCalledWith(
       "mongodb://mongodb:27017/stoneguide",
-      { 
+      {
         dbName: "stoneguide",
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
       }
     );
   });

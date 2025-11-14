@@ -1,21 +1,74 @@
-backend/node_modules/
-backend/src/.DS_Store
+# OS-specific files
 .DS_Store
-backend/coverage/lcov-report
-secrets/
-backend/logs/*.log
-ai-module/static/uploads
-ai-module/app/__pycache__/
-ai-module/app/.pytest_cache
-ai-module/data/predictions.csv
-ai-module/data/labels.csv
-ai-module/tests/__pycache__
-.coverage
-ai-module/htmlcov/
-ai-module/model/resnet50_best.h5
-ai-module/.pytest_cache
-keycloak-custom/stone-guide-realm.json
-k8s/secrets.yaml
-k8s/frontend-secrets.yaml
+*.swp
+*.swo
+*~
+
+# Dependencies
+**/node_modules/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.test
 backend/.env
 backend/.env.test
+frontend/.env.local
+
+# Logs
+logs/
+*.log
+backend/logs/
+backend/logs/*.log
+
+# Test coverage
+coverage/
+.coverage
+htmlcov/
+backend/coverage/
+frontend/coverage/
+ai-module/htmlcov/
+*.lcov
+
+# Test cache
+.pytest_cache/
+ai-module/.pytest_cache
+ai-module/app/.pytest_cache
+ai-module/tests/__pycache__
+
+# Build outputs
+dist/
+build/
+*.egg-info/
+.next/
+.swc/
+out/
+
+# AI module
+ai-module/static/uploads/
+ai-module/data/predictions.csv
+ai-module/data/labels.csv
+ai-module/model/resnet50_best.h5
+
+# Secrets and sensitive data
+secrets/
+k8s/secrets.yaml
+k8s/frontend-secrets.yaml
+keycloak-custom/stone-guide-realm.json
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Temporary files
+*.tmp
+*.temp
+.github/workflows/test.yml.old
