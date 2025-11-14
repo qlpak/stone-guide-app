@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const fs = require("fs");
 
 const getSecret = (name) => {
   const path = `/run/secrets/${name}`;
