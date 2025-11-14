@@ -3,10 +3,9 @@ import io
 from app import create_app
 from flask import Response
 import pytest
-from unittest.mock import patch
-import numpy as np
-from app.utils import predict_top3
 from unittest.mock import patch, MagicMock
+import numpy as np
+from app.utils import predict_top3, save_image
 from PIL import Image
 
 app = create_app()
@@ -19,16 +18,16 @@ def setup_upload_example():
     os.makedirs("static/uploads", exist_ok=True)
     test_img_path = TEST_IMAGE_PATH
     if not os.path.exists(test_img_path):
-        with open(test_img_path, "wb") as f:
-            f.write(os.urandom(1024))  # fake image content
+        img = Image.new("RGB", (224, 224), color=(100, 150, 200))
+        img.save(test_img_path)
 
 def test_get_root():
-    response: Response = client.get("/ai/")
+    response: Response = client.get("/ai/predict/")
     assert response.status_code == 200
     assert "AI module is running" in response.get_data(as_text=True)
 
 def test_post_without_file():
-    response: Response = client.post("/ai/")
+    response: Response = client.post("/ai/predict/")
     assert response.status_code == 400
     assert response.get_json()["error"] == "No image uploaded"
 
@@ -43,7 +42,7 @@ def test_post_with_file():
         with open(TEST_IMAGE_PATH, "rb") as f:
             data = {"image": (io.BytesIO(f.read()), "example.jpg")}
             response: Response = client.post(
-                "/ai/",
+                "/ai/predict/",
                 content_type="multipart/form-data",
                 data=data
             )
@@ -51,6 +50,26 @@ def test_post_with_file():
     assert response.status_code == 200
     result = response.get_json()
     assert result[0]["stone"] == "taj-mahal"
+
+def test_save_image():
+    """Test the save_image utility function."""
+    from werkzeug.datastructures import FileStorage
+    
+    img = Image.new("RGB", (100, 100), color=(255, 0, 0))
+    img_bytes = io.BytesIO()
+    img.save(img_bytes, format='JPEG')
+    img_bytes.seek(0)
+    
+    file = FileStorage(stream=img_bytes, filename="test.jpg", content_type="image/jpeg")
+    
+    saved_path = save_image(file)
+    
+    assert os.path.exists(saved_path)
+    assert saved_path.startswith("static/uploads/")
+    assert saved_path.endswith(".jpg")
+    
+    if os.path.exists(saved_path):
+        os.remove(saved_path)
 
 def test_predict_top3_real():
     img_path = TEST_IMAGE_PATH 
