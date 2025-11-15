@@ -35,7 +35,7 @@ Advanced filtering by color, type, usage, and price range with real-time search 
 
 ### 💰 Smart Pricing
 
-Intelligent price calculator with multi-currency support (USD, EUR, PLN, GBP) and thickness options.
+Intelligent price calculator with multi-currency support (USD, EUR, PLN) and thickness options.
 
 ### ⚖️ Comparison Tools
 
@@ -43,7 +43,7 @@ Side-by-side comparison of up to 3 stones with detailed specifications and smart
 
 ### 🧠 AI Recognition
 
-Upload stone photos to get instant AI predictions using fine-tuned **ResNet50** model with 80%+ accuracy.
+Upload stone photos to get instant AI predictions using fine-tuned **ResNet50** model with 90%+ accuracy.
 
 ### 🔐 Secure Access
 
