@@ -6,6 +6,6 @@ def create_app():
     CORS(app)
 
     from app.routes import ai_routes
-    app.register_blueprint(ai_routes)
+    app.register_blueprint(ai_routes, url_prefix="/ai/predict")
 
     return app
