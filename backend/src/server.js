@@ -17,7 +17,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://stoneguide.local", // frontend origin
+    origin: "http://localhost:3000", // frontend origin
     credentials: true,
   })
 );
@@ -48,7 +48,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: "http://stoneguide.local/api",
+        url: "http://localhost:5001",
       },
     ],
   },

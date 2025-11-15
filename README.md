@@ -92,7 +92,7 @@ docker-compose ps
 
 **For detailed development setup** including environment configuration, development commands, database access, and debugging tips:
 
-**→ See [Development Guide](docs/DEVELOPMENT.md)**
+**→ See [Development Guide](docs/development.md)**
 
 ---
 
@@ -102,9 +102,9 @@ Detailed guides available in the `docs/` directory:
 
 | Guide                                  | Description                                                     |
 | -------------------------------------- | --------------------------------------------------------------- |
-| **[Development](docs/DEVELOPMENT.md)** | Local setup, environment variables, and development commands    |
-| **[Deployment](docs/DEPLOYMENT.md)**   | Docker Compose, Ansible, and Kubernetes deployment instructions |
-| **[CI/CD](docs/CI-CD.md)**             | GitHub Actions workflows and automated testing                  |
+| **[Development](docs/development.md)** | Local setup, environment variables, and development commands    |
+| **[Deployment](docs/deployment.md)**   | Docker Compose, Ansible, and Kubernetes deployment instructions |
+| **[CI/CD](docs/ci-cd.md)**             | GitHub Actions workflows and automated testing                  |
 
 ---
 
@@ -160,9 +160,9 @@ Detailed guides available in the `docs/` directory:
 ```
 stone-guide-app/
 ├── docs/                   # Documentation
-│   ├── DEVELOPMENT.md
-│   ├── DEPLOYMENT.md
-│   └── CI-CD.md
+│   ├── development.md
+│   ├── deployment.md
+│   └── ci-cd.md
 ├── backend/                # Node.js API
 ├── frontend/               # Next.js app
 ├── ai-module/              # Python/Flask AI service
@@ -208,7 +208,7 @@ For complete deployment instructions including:
 - Manual Kubernetes deployment
 - Production configuration and troubleshooting
 
-**→ See [Deployment Guide](docs/DEPLOYMENT.md)**
+**→ See [Deployment Guide](docs/deployment.md)**
 
 ---
 
@@ -218,7 +218,7 @@ For complete deployment instructions including:
 
 Three independent pipelines for Backend, Frontend, and AI Module with automated testing, coverage reporting, and quality checks.
 
-**→ See [CI/CD Guide](docs/CI-CD.md)**
+**→ See [CI/CD Guide](docs/ci-cd.md)**
 
 ---
 

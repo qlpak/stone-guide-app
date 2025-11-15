@@ -22,7 +22,8 @@ def save_image(file):
 def predict_top3(img_path):
     global model
     if model is None:
-        model = tf.keras.models.load_model("model/resnet50_best.h5")
+        model = tf.keras.models.load_model("model/resnet50_best.h5", compile=False)
+        print("Model loaded successfully!")
 
     img = image.load_img(img_path, target_size=(224, 224))
     img_array = image.img_to_array(img)

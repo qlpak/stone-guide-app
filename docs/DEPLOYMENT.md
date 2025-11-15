@@ -125,6 +125,8 @@ kubectl create secret generic app-secrets \
   -n stone-guide
 ```
 
+**Configuration Note:** For Kubernetes, update URLs in `frontend/.env.local`, `backend/src/server.js`, `backend/src/middlewares/auth.js`, `backend/.env`, and `keycloak-custom/stone-guide-realm.json` to use `http://stoneguide.local` (with ingress paths) instead of `localhost` ports used for Docker development.
+
 ---
 
 ## Accessing the Application

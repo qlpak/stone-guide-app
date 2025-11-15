@@ -63,7 +63,7 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:24.0.1
     container_name: stone-keycloak
-    command: start-dev
+    command: start-dev --import-realm
     environment:
       KEYCLOAK_ADMIN: "admin"
       KEYCLOAK_ADMIN_PASSWORD: "admin"
@@ -71,6 +71,7 @@ services:
       - "8080:8080"
     volumes:
       - keycloak-data:/opt/keycloak/data
+      - ./keycloak-custom/stone-guide-realm.json:/opt/keycloak/data/import/stone-guide-realm.json
     networks:
       - stone-network
     healthcheck:
@@ -91,7 +92,7 @@ services:
     networks:
       - stone-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5002/ai-stone-recognition"]
+      test: ["CMD", "curl", "-f", "http://localhost:5002/"]
       interval: 30s
       timeout: 10s
       retries: 5

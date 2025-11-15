@@ -80,7 +80,7 @@ jobs:
           console.log(((coveredStatements / totalStatements) * 100).toFixed(2));
           ")
 
-          echo "📊 Total Statements Coverage: $TOTAL_COVERAGE%"
+          echo "Total Statements Coverage: $TOTAL_COVERAGE%"
 
           if (( $(echo "$TOTAL_COVERAGE < 100" | bc -l) )); then
             echo "Code coverage is below 100%! Failing pipeline."
