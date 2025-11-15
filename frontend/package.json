@@ -38,5 +38,8 @@
     "ts-jest": "^29.3.4",
     "ts-node": "^10.9.2",
     "typescript": "^5"
+  },
+  "overrides": {
+    "js-yaml": "^4.1.1"
   }
 }
