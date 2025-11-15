@@ -22,14 +22,14 @@ describe('Home Page', () => {
 
     render(<Home />)
 
-    expect(screen.getByText('🪨 Welcome back!')).toBeInTheDocument()
+    expect(screen.getByText('Welcome back!')).toBeInTheDocument()
     expect(screen.getByText('You are logged in. Start exploring.')).toBeInTheDocument()
   })
 
   it('renders initial prompt when not logged in and no key pressed', () => {
     render(<Home />)
 
-    expect(screen.getByText('🪨 Stone Guide')).toBeInTheDocument()
+    expect(screen.getByText('Stone Guide')).toBeInTheDocument()
     expect(screen.getByText('Press any key to enter the world of stones.')).toBeInTheDocument()
   })
 

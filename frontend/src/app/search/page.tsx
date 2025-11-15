@@ -4,6 +4,7 @@ import { useDebounce } from '@/utils/useDebounce'
 import { useAuthRedirect } from '@/utils/useAuthRedirect'
 import { useEffect, useState } from 'react'
 import { Sparkles } from 'lucide-react'
+import LoadingSkeleton from '@/components/LoadingSkeleton'
 
 type Stone = {
   _id: string
@@ -77,16 +78,7 @@ export default function SearchPage() {
           className="w-full px-5 py-3 rounded-xl bg-[#1a1a2a]/80 backdrop-blur-md text-white placeholder-zinc-400 border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-300"
         />
 
-        {loading && (
-          <div className="space-y-3">
-            {[1, 2, 3].map((n) => (
-              <div
-                key={n}
-                className="h-24 w-full rounded-xl bg-zinc-800 animate-pulse border border-zinc-700"
-              />
-            ))}
-          </div>
-        )}
+        {loading && <LoadingSkeleton />}
 
         {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
@@ -95,7 +87,7 @@ export default function SearchPage() {
           {stones.map((stone, idx) => (
   <div
     key={stone._id}
-    className="group p-5 rounded-xl border border-zinc-700 bg-gradient-to-br from-[#181828] to-[#1e1e30] transition-all duration-300 hover:scale-[1.015] hover:shadow-lg hover:shadow-indigo-800/30 stone-animate"
+    className="group p-5 rounded-xl border border-zinc-700/50 bg-gradient-to-br from-[#181828]/80 to-[#1e1e30]/80 backdrop-blur-md transition-all duration-300 hover:scale-[1.015] hover:-rotate-1 hover:translate-y-[-4px] hover:shadow-xl hover:shadow-indigo-800/40 stone-animate cursor-pointer"
     style={{ animationDelay: `${idx * 50}ms`, animationFillMode: 'both' }}
   >
 

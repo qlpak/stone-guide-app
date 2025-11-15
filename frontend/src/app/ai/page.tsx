@@ -139,7 +139,8 @@ export default function AIRecognitionPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 + index * 0.2 }}
-                  className="bg-[#1a1a2f] border border-indigo-700/40 rounded-xl px-5 py-4 shadow-md flex items-center justify-between hover:scale-[1.01] transition duration-300"
+                  whileHover={{ scale: 1.02, rotateY: 2, y: -4 }}
+                  className="bg-[#1a1a2f] border border-indigo-700/40 rounded-xl px-5 py-4 shadow-md flex items-center justify-between hover:shadow-lg hover:shadow-indigo-500/30 transition duration-300 cursor-pointer"
                 >
                   <div className="text-sm text-indigo-400 font-bold tracking-wide">
                     {['🥇 1st', '🥈 2nd', '🥉 3rd'][index]}

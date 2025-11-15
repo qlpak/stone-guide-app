@@ -34,7 +34,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="w-full bg-[#0e0e10]/80 backdrop-blur-lg border-b border-zinc-800 sticky top-0 z-50 shadow-md">
+    <nav className="w-full bg-[#0e0e10]/60 backdrop-blur-xl border-b border-zinc-800/50 sticky top-0 z-50 shadow-lg shadow-black/20">
       <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-4">
         {/* Left nav links */}
         <div className="flex flex-wrap items-center gap-5 text-sm font-semibold tracking-wide">
@@ -72,11 +72,12 @@ export default function Navbar() {
             {role.charAt(0).toUpperCase() + role.slice(1)}
           </span>
 
-          <button
+                    <button
             onClick={logout}
-            className="text-sm bg-zinc-900 text-zinc-300 border border-zinc-700 px-4 py-1.5 rounded-md hover:text-red-400 hover:border-red-500 transition-all duration-200 active:scale-95"
+            className="relative overflow-hidden text-sm bg-zinc-900 text-zinc-300 border border-zinc-700 px-4 py-1.5 rounded-md hover:text-red-400 hover:border-red-500 hover:shadow-lg hover:shadow-red-500/20 transition-all duration-200 active:scale-95 group"
           >
-            Logout
+            <span className="relative z-10">Logout</span>
+            <span className="absolute inset-0 bg-red-500/10 scale-0 group-hover:scale-100 transition-transform duration-300 rounded-full" />
           </button>
         </div>
       </div>

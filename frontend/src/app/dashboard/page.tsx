@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { Home, Calculator, Brain, Search, Image, PlusCircle, GitCompare } from 'lucide-react'
 import { decodeToken } from '@/utils/token'
 
 export default function Dashboard() {
@@ -41,27 +42,32 @@ export default function Dashboard() {
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
   {[
-  { icon: '🏠', label: 'Home', desc: 'View this dashboard and check your login status.' },
-  { icon: '🔢', label: 'Pricing', desc: 'Calculate stone pricing based on area and thickness.' },
-  { icon: '🧠', label: 'Recommendations', desc: 'Get recommended stones similar to a selected one.' },
-  { icon: '🔍', label: 'Search Stones', desc: 'Browse and search through all stones by keyword, type, or color.' },
-  { icon: '🖼️', label: 'AI Recognition', desc: 'Upload a photo of stone to identify its type using AI.' },
+  { icon: Home, label: 'Home', desc: 'View this dashboard and check your login status.' },
+  { icon: Calculator, label: 'Pricing', desc: 'Calculate stone pricing based on area and thickness.' },
+  { icon: Brain, label: 'Recommendations', desc: 'Get recommended stones similar to a selected one.' },
+  { icon: Search, label: 'Search Stones', desc: 'Browse and search through all stones by keyword, type, or color.' },
+  { icon: Image, label: 'AI Recognition', desc: 'Upload a photo of stone to identify its type using AI.' },
+  { icon: GitCompare, label: 'Compare Stones', desc: 'Compare multiple stones side by side.' },
   ...(role === 'admin'
-    ? [{ icon: '🧱', label: 'Create Stone', desc: 'Add a new stone entry to the database.' }]
+    ? [{ icon: PlusCircle, label: 'Create Stone', desc: 'Add a new stone entry to the database.' }]
     : [])
-].map((item, index) => (
+].map((item, index) => {
+  const IconComponent = item.icon
+  return (
     <div
       key={index}
-      className="group bg-zinc-800/40 hover:bg-zinc-800/70 transition duration-300 p-5 rounded-xl border border-zinc-700 hover:border-sky-500 shadow-sm hover:shadow-md hover:scale-[1.02]"
+      className="group bg-zinc-800/40 hover:bg-zinc-800/70 backdrop-blur-sm transition-all duration-300 p-5 rounded-xl border border-zinc-700 hover:border-sky-500 shadow-sm hover:shadow-md hover:shadow-sky-500/20 hover:scale-[1.02] hover:-rotate-1 hover:translate-y-[-4px] cursor-pointer"
     >
       <div className="text-slate-300 font-semibold text-sm flex items-center gap-2 mb-1">
-        <span className="text-lg">{item.icon}</span> {item.label}
+        <IconComponent className="w-5 h-5 text-indigo-400 group-hover:text-sky-400 transition-colors duration-200" />
+        {item.label}
       </div>
       <p className="text-gray-400 text-sm group-hover:text-gray-300 transition duration-200">
         {item.desc}
       </p>
     </div>
-  ))}
+  )
+})}
 </div>
 
       </div>

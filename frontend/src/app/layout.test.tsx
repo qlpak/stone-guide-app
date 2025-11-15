@@ -8,6 +8,13 @@ jest.mock('@/components/Navbar', () => {
   }
 })
 
+// Mock PageTransition component
+jest.mock('@/components/PageTransition', () => {
+  return function MockPageTransition({ children }: { children: React.ReactNode }) {
+    return <div data-testid="page-transition">{children}</div>
+  }
+})
+
 describe('RootLayout', () => {
   it('renders children correctly', () => {
     render(

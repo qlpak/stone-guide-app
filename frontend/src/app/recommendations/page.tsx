@@ -65,7 +65,7 @@ export default function RecommendationsPage() {
       <Gem className="text-indigo-300" /> Stone Recommendations
     </h1>
 
-            <div className="grid gap-6 mb-12 bg-[#111122]/90 p-6 rounded-2xl border border-[#2d2d4d] shadow-xl backdrop-blur">
+            <div className="grid gap-6 mb-12 bg-[#111122]/70 backdrop-blur-xl p-6 rounded-2xl border border-[#2d2d4d]/50 shadow-xl shadow-indigo-900/20">
 
           <div>
             <label className="block mb-2 text-sm text-zinc-400">Color</label>
@@ -150,9 +150,12 @@ export default function RecommendationsPage() {
 
           <button
         onClick={fetchRecommendations}
-        className="w-full bg-gradient-to-r from-indigo-900 via-[#1a1433] to-indigo-800 hover:brightness-110 text-white p-3 rounded-xl font-bold tracking-wide shadow-xl transition-all duration-300 transform hover:scale-[1.015] flex items-center justify-center gap-2"
+        className="relative overflow-hidden w-full bg-gradient-to-r from-indigo-900 via-[#1a1433] to-indigo-800 hover:brightness-110 text-white p-3 rounded-xl font-bold tracking-wide shadow-xl hover:shadow-indigo-500/40 transition-all duration-300 transform hover:scale-[1.015] group"
       >
-        <Search className="h-5 w-5" /> Find Recommendations
+        <span className="relative z-10 flex items-center justify-center gap-2">
+          <Search className="h-5 w-5" /> Find Recommendations
+        </span>
+        <span className="absolute inset-0 bg-white/10 scale-0 group-hover:scale-100 transition-transform duration-500 rounded-full" />
       </button>
         </div>
 
@@ -162,7 +165,7 @@ export default function RecommendationsPage() {
           {results.map(stone => (
             <div
               key={stone._id}
-          className="bg-[#111122] border border-[#2d2d4d] p-5 rounded-2xl shadow-md hover:shadow-lg transition duration-300 hover:border-indigo-700 group"
+          className="bg-[#111122] border border-[#2d2d4d] p-5 rounded-2xl shadow-md hover:shadow-lg hover:shadow-indigo-700/30 transition-all duration-300 hover:border-indigo-700 hover:-rotate-1 hover:translate-y-[-4px] group cursor-pointer"
             >
           <h2 className="text-xl font-bold mb-2 text-indigo-300 group-hover:text-indigo-200 transition">
                 {formatStoneName(stone.name)}

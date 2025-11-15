@@ -123,7 +123,7 @@ return (
         </h1>
 
         {/* FORM WRAPPED IN A DIV TO CONTROL HEIGHT ALIGNMENT */}
-        <div className="bg-[#111427] p-6 rounded-2xl shadow-2xl border border-[#2b2b44] backdrop-blur-sm">
+        <div className="bg-[#111427]/70 backdrop-blur-xl p-6 rounded-2xl shadow-2xl shadow-indigo-900/20 border border-[#2b2b44]/50">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="relative">
               <input
