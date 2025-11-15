@@ -150,4 +150,3 @@ Add to `/etc/hosts`:
 
 1. Get Ingress IP: `kubectl get ingress -n stone-guide`
 2. Point your domain to the Ingress IP
-3. Configure TLS with cert-manager (recommended)
