@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🪨 StoneGuide
+# StoneGuide
 
 ### AI-Powered Natural Stone Discovery & Pricing Platform
 
@@ -27,35 +27,35 @@
 
 ---
 
-## ✨ Features
+## Features
 
-### 🔍 Stone Discovery
+### Stone Discovery
 
 Advanced filtering by color, type, usage, and price range with real-time search results.
 
-### 💰 Smart Pricing
+### Smart Pricing
 
 Intelligent price calculator with multi-currency support (USD, EUR, PLN) and thickness options.
 
-### ⚖️ Comparison Tools
+### Comparison Tools
 
 Side-by-side comparison of up to 3 stones with detailed specifications and smart recommendations.
 
-### 🧠 AI Recognition
+### AI Recognition
 
 Upload stone photos to get instant AI predictions using fine-tuned **ResNet50** model with 90%+ accuracy.
 
-### 🔐 Secure Access
+### Secure Access
 
 OAuth 2.0 authentication via Keycloak with role-based access control (user/admin).
 
-### 📚 API Documentation
+### API Documentation
 
 Full REST API with Swagger/OpenAPI documentation at `/api-docs`.
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 
@@ -96,7 +96,7 @@ docker-compose ps
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 Detailed guides available in the `docs/` directory:
 
@@ -108,7 +108,7 @@ Detailed guides available in the `docs/` directory:
 
 ---
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 ### Frontend
 
@@ -144,7 +144,7 @@ Detailed guides available in the `docs/` directory:
 
 ---
 
-## 🔐 Security
+## Security
 
 - **OAuth 2.0 / OpenID Connect** via Keycloak
 - **JWT-based authentication** with asymmetric key verification
@@ -155,7 +155,7 @@ Detailed guides available in the `docs/` directory:
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 stone-guide-app/
@@ -176,7 +176,7 @@ stone-guide-app/
 
 ---
 
-## 🧠 AI Stone Recognition
+## AI Stone Recognition
 
 ### How It Works
 
@@ -197,7 +197,7 @@ stone-guide-app/
 
 ---
 
-## 🚢 Deployment
+## Deployment
 
 **Automated deployment with Ansible or manual Kubernetes deployment.**
 
@@ -212,7 +212,7 @@ For complete deployment instructions including:
 
 ---
 
-## 🔄 CI/CD
+## CI/CD
 
 **Automated testing and continuous integration with GitHub Actions.**
 
@@ -222,7 +222,7 @@ Three independent pipelines for Backend, Frontend, and AI Module with automated 
 
 ---
 
-## 🏛️ Architecture
+## Architecture
 
 Microservice architecture with 6 core services:
 
@@ -243,7 +243,7 @@ Microservice architecture with 6 core services:
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 <div align="center">
 
@@ -255,6 +255,6 @@ _Full-stack solo project showcasing modern cloud-native development_
 
 ---
 
-## 📜 License
+## License
 
 This project is **closed-source**. All rights reserved.
