@@ -1,5 +1,11 @@
+const crypto = require("crypto");
 const mongoose = require("mongoose");
 const { MongoMemoryServer } = require("mongodb-memory-server");
+
+if (!globalThis.crypto) {
+  globalThis.crypto = crypto.webcrypto;
+}
+
 jest.mock("../src/config/redis", () => ({
   get: jest.fn(),
   set: jest.fn(),
